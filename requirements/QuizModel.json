@@ -1,0 +1,15 @@
+[
+  {
+    "id": "ObjectId",
+    "name": "String",
+    "description": "String",
+    "category": "String",
+    "questions": [
+      {
+        "question": "String",
+        "answer": "String",
+        "options": []
+      }
+    ]
+  }
+]
