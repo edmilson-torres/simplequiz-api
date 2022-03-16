@@ -1,15 +1,11 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "API quiz",
+    "description": "Simple Quiz",
     "version": "1.0.0",
     "title": "Simple Quiz",
     "contact": {
       "email": "edmilson.torres@gmail.com"
-    },
-    "license": {
-      "name": "MIT",
-      "url": "https://github.com/edmilson-torres/"
     }
   },
   "servers": [
@@ -18,7 +14,7 @@
       "description": "API host test"
     },
     {
-      "url": "http://localhost:5000",
+      "url": "http://localhost:3000",
       "description": "API local test"
     }
   ],
@@ -29,28 +25,46 @@
     "https"
   ],
   "externalDocs": {
-    "description": "API Github repository",
-    "url": "https://github.com/edmilson-torres/"
+    "description": "SimpleQuiz API",
+    "url": "https://github.com/edmilson-torres/simplequiz-api"
   },
   "paths": {
-    "/api": {
+    "/api/quizzes": {
       "get": {
-        "summary": "summary",
-        "description": "description",
+        "summary": "Quiz list",
         "tags": [
-          "URL"
+          "Quiz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
+    "/api/quiz/{id}": {
+      "get": {
+        "summary": "Get Quiz from Id",
+        "tags": [
+          "Quiz"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "path",
-            "description": "path",
+            "name": "id",
+            "description": "Quiz Id",
             "required": true
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
           }
         }
       }
