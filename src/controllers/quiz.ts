@@ -1,26 +1,25 @@
 import { Request, Response } from 'express';
-import QuizListModel from '../database/models/quizList';
-import QuizModel from '../database/models/quiz';
+import QuizRepository from '../repositories/quiz';
 
 class QuizController {
-  public async quiz(req: Request, res: Response): Promise<void> {
+  public async findQuiz(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const quiz = await QuizModel.findById(id);
+      const quiz = await QuizRepository.findQuizById(id);
       res.json(quiz);
     } catch (err) {
-      console.log(err);
-      res.status(400).json({ error: err.message });
+      res.status(404);
+      throw new Error('not found');
     }
   }
 
-  public async quizList(req: Request, res: Response): Promise<void> {
+  public async findQuizList(req: Request, res: Response): Promise<void> {
     try {
-      const quizList = await QuizListModel.find({});
+      const quizList = await QuizRepository.findQuizList();
       res.json(quizList);
     } catch (err) {
-      console.log(err);
-      res.status(400).json({ error: err.message });
+      res.status(404);
+      throw new Error('not found');
     }
   }
 }

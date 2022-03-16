@@ -15,7 +15,7 @@ export class QuizList {
 
   @prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'quiz',
+    ref: 'quizzes',
     required: true
   })
   public quizId: string;
