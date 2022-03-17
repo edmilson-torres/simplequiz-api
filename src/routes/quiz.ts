@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import QuizController from '../controllers/quiz';
 
-const quizRouter = Router();
+const router = Router();
 const quizController = new QuizController();
 
-quizRouter.get('/quizzes', quizController.findQuizList);
-quizRouter.get('/quiz/:id', quizController.findQuiz);
+router.get('/quizzes', quizController.findQuizList);
+router.get('/quiz/:id', quizController.findQuiz);
 
-export default quizRouter;
+export default router;

@@ -1,8 +1,8 @@
 import express from 'express';
-import quizRouter from './quiz';
+import quiz from './quiz';
 
-const app = express();
+const router = express.Router();
 
-app.use(quizRouter);
+router.use(quiz);
 
-export default app;
+export default router;
