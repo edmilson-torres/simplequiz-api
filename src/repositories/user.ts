@@ -5,7 +5,7 @@ class UserRepository {
     return UserModel.findById(id);
   }
 
-  findUSerList() {
+  findUserList() {
     return UserModel.find({});
   }
 
@@ -13,8 +13,8 @@ class UserRepository {
     return UserModel.create(user);
   }
 
-  findUserByEmail(email: string) {
-    return UserModel.findOne({ email });
+  deleteUser(id: string) {
+    return UserModel.deleteOne({ _id: id });
   }
 }
 

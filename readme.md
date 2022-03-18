@@ -18,14 +18,18 @@ Making REST API to provide quizzes
 ## 📑 TODO
 ✔️ get all quizzes  
 ✔️ get quiz by id  
+✔️ create user  
+✔️ get user list  
+✔️ delete user  
 ⬜ user register  
 ⬜ user login  
 ⬜ user profile  
 ⬜ user validate  
 ⬜ admin role  
+⬜ create quiz  
+⬜ edit quiz  
+⬜ delete quiz  
 ⬜ admin profile  
-⬜ get user list  
-⬜ delete user  
 ⬜ auth middleware  
 ⬜ admin middleware  
 ⬜ password reset  
