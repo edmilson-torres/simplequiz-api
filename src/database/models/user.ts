@@ -4,16 +4,16 @@ export class User {
   @prop({ required: true })
   name: string;
 
-  @prop({ lowercase: true, required: true, unique: true })
+  @prop({ required: true, lowercase: true, unique: true })
   email: string;
 
-  @prop({ required: true })
+  @prop({ default: 'user' })
   role: string;
 
   @prop({ required: true })
   password: string;
 
-  @prop({ required: true })
+  @prop({ default: new Date().toISOString() })
   createAt: Date;
 }
 const UserModel = getModelForClass(User);

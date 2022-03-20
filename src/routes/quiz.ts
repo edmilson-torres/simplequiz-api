@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import QuizController from '../controllers/quiz';
-
+import validateToken from '../middlewares/validateToken';
 const router = Router();
 const quizController = new QuizController();
 
-router.get('/quizzes', quizController.findQuizList);
-router.get('/quiz/:id', quizController.findQuiz);
+router.get('/quizzes', validateToken, quizController.findQuizList);
+router.get('/quiz/:id', validateToken, quizController.findQuiz);
 
 export default router;

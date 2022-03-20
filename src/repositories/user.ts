@@ -1,8 +1,12 @@
-import UserModel, { User } from '@/database/models/user';
+import UserModel, { User } from '../database/models/user';
 
 class UserRepository {
   findUserById(id: string) {
-    return UserModel.findById(id);
+    return UserModel.findById(id, '-password');
+  }
+
+  findUserByEmail(email: string) {
+    return UserModel.findOne({ email: email });
   }
 
   findUserList() {
