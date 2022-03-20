@@ -1,7 +1,7 @@
 interface Question {
   id: string;
   question: string;
-  aswer: string;
+  answer: string;
   options: Array<string>;
 }
 
