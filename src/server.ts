@@ -1,4 +1,3 @@
-import 'module-alias/register';
 import 'dotenv/config';
 import app from './app';
 import env from './config/env';
