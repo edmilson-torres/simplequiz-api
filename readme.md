@@ -33,4 +33,5 @@ Making REST API to provide quizzes
 ⬜ admin middleware  
 ⬜ password reset  
 ⬜ refactor 1 file 1 function and use services  
-⬜ tests
+⬜ swagger docs  
+⬜ jest tests

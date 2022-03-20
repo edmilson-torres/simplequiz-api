@@ -1,39 +1,209 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.0.1",
   "info": {
     "description": "Simple Quiz",
     "version": "1.0.0",
     "title": "Simple Quiz",
     "contact": {
+      "name": "Edmilson Torres",
       "email": "edmilson.torres@gmail.com"
     }
   },
   "servers": [
     {
-      "url": "https://simplequiz.herokuapp.com",
-      "description": "API host test"
-    },
-    {
       "url": "http://localhost:3000",
       "description": "API local test"
     }
   ],
-  "host": "localhost:5000",
-  "basePath": "/",
+  "host": "localhost:3000",
+  "basePath": "/api",
   "schemes": [
     "http",
     "https"
   ],
-  "externalDocs": {
-    "description": "SimpleQuiz API",
-    "url": "https://github.com/edmilson-torres/simplequiz-api"
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "description": "JWT authorization of an API",
+      "name": "Authorization",
+      "in": "header"
+    }
   },
   "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "User register",
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "User login with email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "email of the user"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "email of the user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "password of user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "User login",
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "User login with email and password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "email of the user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "password of user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "User list",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "USer Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "User delete",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "USer Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "User list",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
     "/api/quizzes": {
       "get": {
         "summary": "Quiz list",
         "tags": [
           "Quiz"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -47,7 +217,7 @@
     },
     "/api/quiz/{id}": {
       "get": {
-        "summary": "Get Quiz from Id",
+        "summary": "Get Quiz by Id",
         "tags": [
           "Quiz"
         ],
@@ -59,12 +229,94 @@
             "required": true
           }
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           },
           "429": {
             "description": "Too many request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "createAt": {
+            "type": "date"
+          }
+        }
+      },
+      "quiz": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/questions"
+            }
+          }
+        }
+      },
+      "questions": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
