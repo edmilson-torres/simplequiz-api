@@ -38,7 +38,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "User login with email and password",
+          "description": "User create with email and password",
           "content": {
             "application/json": {
               "schema": {
@@ -67,8 +67,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Ok"
+          "201": {
+            "description": "Created"
           },
           "429": {
             "description": "Too many request"
@@ -119,7 +119,7 @@
     },
     "/api/users/{id}": {
       "get": {
-        "summary": "User list",
+        "summary": "User by id",
         "tags": [
           "User"
         ],
@@ -132,7 +132,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "USer Id",
+            "description": "User Id",
             "required": true
           }
         ],
@@ -159,7 +159,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "USer Id",
+            "description": "User Id",
             "required": true
           }
         ],
@@ -194,7 +194,38 @@
         }
       }
     },
-    "/api/quizzes": {
+    "/api/quiz": {
+      "post": {
+        "summary": "Quiz create",
+        "tags": [
+          "Quiz"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Quiz create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "type": "object",
+                "$ref": "#/components/schemas/quiz"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      },
       "get": {
         "summary": "Quiz list",
         "tags": [
@@ -217,7 +248,7 @@
     },
     "/api/quiz/{id}": {
       "get": {
-        "summary": "Get Quiz by Id",
+        "summary": "Quiz by Id",
         "tags": [
           "Quiz"
         ],
@@ -232,6 +263,33 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Quiz delete",
+        "tags": [
+          "Quiz"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "USer Id",
+            "required": true
           }
         ],
         "responses": {
