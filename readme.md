@@ -24,10 +24,11 @@ Making REST API to provide quizzes
 ✔️ delete user  
 ✔️ user register  
 ✔️ user login  
+⬜ user edit  
 ⬜ admin role  
-⬜ create quiz  
+✔️ create quiz  
 ⬜ edit quiz  
-⬜ delete quiz  
+✔️ delete quiz  
 ✔️ auth middleware  
 ✔️ rate-limit middleware  
 ⬜ admin middleware  
