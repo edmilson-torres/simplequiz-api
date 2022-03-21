@@ -1,15 +1,23 @@
-import QuizListModel from '../database/models/quizList';
-import QuizModel, { Quiz } from '../database/models/quiz';
+import { Quiz, QuizModel } from '../database/models/quiz';
 
 class QuizRepository {
-  public async findQuizById(id: string): Promise<Quiz | null> {
+  public async createQuiz(quiz: Quiz) {
+    return await QuizModel.create(quiz);
+  }
+
+  public async findQuizById(id: string) {
     const quiz = await QuizModel.findById(id);
     return quiz;
   }
 
-  public async findQuizList(): Promise<Object> {
-    const quizList = await QuizListModel.find({});
+  public async findQuizList() {
+    const quizList = await QuizModel.find({}, '-questions');
     return quizList;
+  }
+
+  public async deleteQuiz(id: string) {
+    const deletedquiz = await QuizModel.deleteOne({ _id: id });
+    return deletedquiz;
   }
 }
 
