@@ -54,13 +54,12 @@ class UserController {
 
       const passwordHased = await createStringHash(password);
       const role = 'user';
-      const createAt = new Date().toISOString();
+
       const userModel = new UserModel({
         name,
         email,
         password: passwordHased,
-        role,
-        createAt
+        role
       });
       await UserRepository.createUser(userModel);
       res.status(201).json({ message: 'user created' });

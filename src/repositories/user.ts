@@ -1,24 +1,24 @@
 import UserModel, { User } from '../database/models/user';
 
 class UserRepository {
-  findUserById(id: string) {
-    return UserModel.findById(id, '-password');
+  public async findUserById(id: string): Promise<User> {
+    return await UserModel.findById(id, '-password');
   }
 
-  findUserByEmail(email: string) {
-    return UserModel.findOne({ email: email });
+  public async findUserByEmail(email: string) {
+    return await UserModel.findOne({ email: email });
   }
 
-  findUserList() {
-    return UserModel.find({});
+  public async findUserList(): Promise<Array<User>> {
+    return await UserModel.find({});
   }
 
-  createUser(user: User) {
-    return UserModel.create(user);
+  public async createUser(user: User): Promise<User> {
+    return await UserModel.create(user);
   }
 
-  deleteUser(id: string) {
-    return UserModel.deleteOne({ _id: id });
+  public async deleteUser(id: string): Promise<Object> {
+    return await UserModel.deleteOne({ _id: id });
   }
 }
 
