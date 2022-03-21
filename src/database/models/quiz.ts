@@ -1,29 +1,34 @@
-import { prop, getModelForClass, mongoose } from '@typegoose/typegoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
 
 class Question {
   @prop({ required: true })
-  question: string;
+  public question: string;
 
   @prop({ required: true })
-  answer: string;
+  public answer: string;
 
   @prop({ required: true })
-  options: Array<string>;
+  public options: Array<string>;
 }
 
 export class Quiz {
   @prop({ required: true })
-  name: string;
+  public name: string;
 
   @prop({ required: true })
-  description: string;
+  public description: string;
 
   @prop({ required: true })
-  category: string;
+  public category: string;
 
-  @prop({ required: true, type: mongoose.Schema.Types.Mixed })
-  questions: Array<Question>;
+  @prop({ required: true })
+  public length: number;
+
+  @prop({ required: true, type: () => [Question] })
+  public questions: Question[];
+
+  @prop({ default: new Date().toISOString() })
+  public createAt: Date;
 }
-const QuizModel = getModelForClass(Quiz);
 
-export default QuizModel;
+export const QuizModel = getModelForClass(Quiz);
