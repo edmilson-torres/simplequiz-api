@@ -1,6 +1,7 @@
-import { compareStringHash } from '../utils/hash';
 import { Request, Response } from 'express';
+
 import UserRepository from '../repositories/user';
+import { compareStringHash } from '../utils/hash';
 import { signJwt } from '../utils/jwt';
 
 class AuthController {
@@ -33,7 +34,9 @@ class AuthController {
 
     try {
       const payload: Object = { id: user._id };
-      const token = signJwt(payload, { expiresIn: '5m' });
+      const token = signJwt(payload, {
+        expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
+      });
       res.status(200).json({
         id: user._id,
         name: user.name,
