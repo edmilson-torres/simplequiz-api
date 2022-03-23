@@ -26,6 +26,7 @@ Making REST API to provide quizzes
 ✔️ rate-limit middleware  
 ⬜ admin middleware  
 ⬜ password reset  
-⬜ refactor 1 file 1 function and use services  
+⬜ refactor 1 file 1 function  
+⬜ strip logic from controllers and create services  
 ⬜ swagger docs  
 ⬜ jest tests
