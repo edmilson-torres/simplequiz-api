@@ -206,11 +206,6 @@
           "content": {
             "application/json": {
               "schema": {
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ],
                 "type": "object",
                 "$ref": "#/components/schemas/quiz"
               }
@@ -288,7 +283,7 @@
           {
             "in": "path",
             "name": "id",
-            "description": "USer Id",
+            "description": "User Id",
             "required": true
           }
         ],
@@ -350,12 +345,41 @@
           "category": {
             "type": "string"
           },
+          "createAt": {
+            "type": "string"
+          },
           "questions": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/questions"
             }
           }
+        },
+        "example": {
+          "category": "new category",
+          "description": "example",
+          "name": "quiz example",
+          "createAt": "2022-03-21T01:31:42.020+00:00",
+          "questions": [
+            {
+              "question": "how to example 1?",
+              "answer": "right answer",
+              "options": [
+                "wrong  answer 1",
+                "wrong  answer 2",
+                "wrong  answer 3"
+              ]
+            },
+            {
+              "question": "how to example 2?",
+              "answer": "right answer",
+              "options": [
+                "wrong  answer 1",
+                "wrong  answer 2",
+                "wrong  answer 3"
+              ]
+            }
+          ]
         }
       },
       "questions": {
