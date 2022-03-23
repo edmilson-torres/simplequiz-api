@@ -11,13 +11,13 @@ export function signJwt(object: Object, options?: jwt.SignOptions | undefined) {
   return token;
 }
 
-export function verifyJwt(token: string): Object | null {
+export function verifyJwt(token: string) {
   const secret = env.secretJWT;
 
   try {
     const decoded = jwt.verify(token, secret);
     return decoded;
-  } catch (e) {
+  } catch (err) {
     return null;
   }
 }

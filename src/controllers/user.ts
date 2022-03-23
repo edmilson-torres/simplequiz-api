@@ -32,19 +32,19 @@ class UserController {
 
   public async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
-    const user = await UserRepository.findUserById(id);
-
-    if (!user) {
-      res.status(422);
-      throw new Error('user not found');
-    }
-
     try {
+      const user = await UserRepository.findUserById(id);
+
+      if (!user) {
+        res.status(422);
+        throw new Error('user not found');
+      }
+
       await UserRepository.deleteUser(id);
       res.json({ message: 'resource deleted successfully' });
     } catch (err) {
-      res.status(500);
-      throw new Error('server error');
+      res.status(400);
+      throw new Error('bad request');
     }
   }
 

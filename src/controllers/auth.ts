@@ -33,7 +33,7 @@ class AuthController {
     }
 
     try {
-      const payload: Object = { id: user._id };
+      const payload: Object = { sub: user._id, role: user.role };
       const token = signJwt(payload, {
         expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
       });
