@@ -10,7 +10,7 @@ class UserRepository {
   }
 
   public async findUserList(): Promise<Array<User>> {
-    return await UserModel.find({});
+    return await UserModel.find({}, '-password');
   }
 
   public async createUser(user: User): Promise<User> {
