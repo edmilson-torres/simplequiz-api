@@ -8,20 +8,15 @@ class AuthController {
   public async login(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    if (!email) {
+    if (!email || !password) {
       res.status(422);
-      throw Error('user or password incorrect');
-    }
-
-    if (!password) {
-      res.status(422);
-      throw Error('user or password incorrect');
+      throw Error('user or password missing');
     }
 
     const user = await UserRepository.findUserByEmail(email);
 
     if (!user) {
-      res.status(404);
+      res.status(401);
       throw Error('user or password incorrect');
     }
 
