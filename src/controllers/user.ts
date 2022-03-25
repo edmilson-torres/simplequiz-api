@@ -53,23 +53,24 @@ class UserController {
       const { name, email, password } = req.body;
 
       const passwordHased = await createStringHash(password);
-      const role = 'user';
 
       const userModel = new UserModel({
         name,
         email,
-        password: passwordHased,
-        role
+        password: passwordHased
       });
-      await UserRepository.createUser(userModel);
-      res.status(201).json({ message: 'user created' });
+
+      const user = await UserRepository.createUser(userModel);
+
+      res.status(201).json({ message: 'user created', user: user });
     } catch (err) {
       if (err.code === 11000) {
         res.status(409);
         throw new Error('account already exists');
+      } else {
+        res.status(err.code);
+        throw new Error(err.message);
       }
-      res.status(400);
-      throw new Error('bad request');
     }
   }
 }

@@ -20,15 +20,15 @@ class QuizController {
 
       const quizCreated = await QuizRepository.createQuiz(quizModel);
 
-      console.log(quizCreated._id);
-      res.status(201).json({ message: 'quiz created' });
+      res.status(201).json({ message: 'quiz created', quiz: quizCreated });
     } catch (err) {
       if (err.code === 11000) {
         res.status(409);
         throw new Error('account already exists');
+      } else {
+        res.status(err.code);
+        throw new Error(err.message);
       }
-      res.status(400);
-      throw new Error('bad request');
     }
   }
 
