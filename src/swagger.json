@@ -200,6 +200,11 @@
         "tags": [
           "Quiz"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "description": "Quiz create",
