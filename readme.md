@@ -20,7 +20,7 @@ Making REST API to provide quizzes
 ✔️ user edit  
 ✔️ admin role  
 ✔️ create quiz  
-⬜ edit quiz  
+✔️ edit quiz  
 ✔️ delete quiz  
 ✔️ auth middleware  
 ✔️ rate-limit middleware  

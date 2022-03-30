@@ -117,6 +117,27 @@
         }
       }
     },
+    "/api/users": {
+      "get": {
+        "summary": "User list",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
     "/api/users/{id}": {
       "get": {
         "summary": "User by id",
@@ -171,11 +192,9 @@
             "description": "Too many request"
           }
         }
-      }
-    },
-    "/api/users": {
-      "get": {
-        "summary": "User list",
+      },
+      "put": {
+        "summary": "Update user by id",
         "tags": [
           "User"
         ],
@@ -184,9 +203,37 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "User update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "email of the user"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User updated"
           },
           "429": {
             "description": "Too many request"
@@ -300,6 +347,45 @@
             "description": "Too many request"
           }
         }
+      },
+      "put": {
+        "summary": "Update quiz by Id",
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Quiz Id",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Quiz update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/quiz"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
       }
     }
   },
@@ -387,7 +473,7 @@
           ]
         }
       },
-      "questions": {
+      "question": {
         "type": "object",
         "properties": {
           "_id": {
