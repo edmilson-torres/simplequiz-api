@@ -16,5 +16,11 @@ router.delete(
   roleCheck(['admin']),
   quizController.deletequiz
 );
+router.put(
+  '/quiz/:id',
+  validateToken,
+  roleCheck(['admin']),
+  quizController.updateQuiz
+);
 
 export default router;
