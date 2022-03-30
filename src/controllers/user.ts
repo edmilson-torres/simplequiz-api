@@ -75,11 +75,11 @@ class UserController {
   }
 
   public async updateUser(req: Request, res: Response) {
-    const { sub } = res.locals.decodedToken;
+    const { sub, role } = res.locals.decodedToken;
     const { id } = req.params;
     const { name } = req.body;
 
-    if (sub === id) {
+    if (sub === id || role === 'admin') {
       try {
         await UserRepository.updateUser(id, name);
         res.status(200).json({ message: 'user updated' });
