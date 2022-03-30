@@ -15,5 +15,6 @@ router.delete(
   roleCheck(['admin']),
   userController.deleteUser
 );
+router.put('/users/:id', validateToken, userController.updateUser);
 
 export default router;

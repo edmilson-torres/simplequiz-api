@@ -17,14 +17,15 @@ Making REST API to provide quizzes
 ✔️ delete user  
 ✔️ user register  
 ✔️ user login  
-⬜ user edit  
-⬜ admin role  
+✔️ user edit  
+✔️ admin role  
 ✔️ create quiz  
 ⬜ edit quiz  
 ✔️ delete quiz  
 ✔️ auth middleware  
 ✔️ rate-limit middleware  
-⬜ admin middleware  
+⬜ validator
+✔️ admin middleware  
 ⬜ password reset  
 ⬜ refactor 1 file 1 function  
 ⬜ strip logic from controllers and create services  

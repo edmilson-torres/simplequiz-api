@@ -73,6 +73,25 @@ class UserController {
       }
     }
   }
+
+  public async updateUser(req: Request, res: Response) {
+    const { sub } = res.locals.decodedToken;
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (sub === id) {
+      try {
+        await UserRepository.updateUser(id, name);
+        res.status(200).json({ message: 'user updated' });
+      } catch (err) {
+        res.status(err.code);
+        throw new Error(err.message);
+      }
+    } else {
+      res.status(403);
+      throw new Error('forbidden');
+    }
+  }
 }
 
 export default UserController;
