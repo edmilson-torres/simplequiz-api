@@ -24,7 +24,8 @@ Making REST API to provide quizzes
 ✔️ delete quiz  
 ✔️ auth middleware  
 ✔️ rate-limit middleware  
-⬜ validator
+✔️ register validator  
+⬜ quiz validator  
 ✔️ admin middleware  
 ⬜ password reset  
 ⬜ refactor 1 file 1 function  
