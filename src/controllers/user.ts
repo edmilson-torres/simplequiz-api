@@ -2,6 +2,7 @@ import UserModel from '../database/models/user';
 import { createStringHash } from '../utils/hash';
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/user';
+import registerValidator from '../utils/registerValidator';
 
 class UserController {
   public async findUsers(req: Request, res: Response) {
@@ -50,6 +51,13 @@ class UserController {
 
   public async createUser(req: Request, res: Response) {
     try {
+      const validate = await registerValidator(req.body);
+
+      if (typeof validate === 'string') {
+        res.status(400);
+        throw new Error(validate);
+      }
+
       const { name, email, password } = req.body;
 
       const passwordHased = await createStringHash(password);
