@@ -6,6 +6,7 @@ interface Quiz {
   description: string;
   category: string;
   questions: Array<Question>;
+  createAt: Date;
 }
 
 export default Quiz;
