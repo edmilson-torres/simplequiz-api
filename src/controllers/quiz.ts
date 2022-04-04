@@ -8,7 +8,7 @@ class QuizController {
     try {
       const { name, description, category, questions } = req.body;
 
-      const questionsLength = questions.length;
+      const questionsLength: number = questions.length;
 
       const quizModel = new QuizModel({
         category,
