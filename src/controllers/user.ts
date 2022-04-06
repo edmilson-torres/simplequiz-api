@@ -50,14 +50,14 @@ class UserController {
   }
 
   public async createUser(req: Request, res: Response) {
+    const validate = await registerValidator(req.body);
+
+    if (typeof validate === 'string' || false) {
+      res.status(400);
+      throw new Error(validate);
+    }
+
     try {
-      const validate = await registerValidator(req.body);
-
-      if (typeof validate === 'string') {
-        res.status(400);
-        throw new Error(validate);
-      }
-
       const { name, email, password } = req.body;
 
       const passwordHased = await createStringHash(password);
