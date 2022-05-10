@@ -5,6 +5,10 @@ class QuizRepository {
     return await QuizModel.create(quiz);
   }
 
+  public async updateQuiz(id: string, quiz: Object): Promise<Quiz> {
+    return await QuizModel.findByIdAndUpdate({ _id: id }, quiz, { new: true });
+  }
+
   public async findQuizById(id: string) {
     const quiz = await QuizModel.findById(id);
     return quiz;

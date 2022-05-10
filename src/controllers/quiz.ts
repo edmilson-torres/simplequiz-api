@@ -8,7 +8,7 @@ class QuizController {
     try {
       const { name, description, category, questions } = req.body;
 
-      const questionsLength = questions.length;
+      const questionsLength: number = questions.length;
 
       const quizModel = new QuizModel({
         category,
@@ -29,6 +29,26 @@ class QuizController {
         res.status(err.code);
         throw new Error(err.message);
       }
+    }
+  }
+
+  public async updateQuiz(req: Request, res: Response) {
+    try {
+      const data = req.body;
+      const { id } = req.params;
+
+      delete data.createAt;
+
+      if (data.questions) {
+        data.length = data.questions.length;
+      }
+
+      const quiz = await QuizRepository.updateQuiz(id, data);
+
+      res.status(200).json({ message: 'quiz updated', quiz: quiz });
+    } catch (err) {
+      res.status(err.code);
+      throw new Error(err.message);
     }
   }
 

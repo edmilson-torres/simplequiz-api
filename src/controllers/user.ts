@@ -2,6 +2,7 @@ import UserModel from '../database/models/user';
 import { createStringHash } from '../utils/hash';
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/user';
+import registerValidator from '../utils/registerValidator';
 
 class UserController {
   public async findUsers(req: Request, res: Response) {
@@ -49,6 +50,13 @@ class UserController {
   }
 
   public async createUser(req: Request, res: Response) {
+    const validate = await registerValidator(req.body);
+
+    if (typeof validate === 'string' || false) {
+      res.status(400);
+      throw new Error(validate);
+    }
+
     try {
       const { name, email, password } = req.body;
 
@@ -71,6 +79,25 @@ class UserController {
         res.status(err.code);
         throw new Error(err.message);
       }
+    }
+  }
+
+  public async updateUser(req: Request, res: Response) {
+    const { sub, role } = res.locals.decodedToken;
+    const { id } = req.params;
+    const { name } = req.body;
+
+    if (sub === id || role === 'admin') {
+      try {
+        await UserRepository.updateUser(id, name);
+        res.status(200).json({ message: 'user updated' });
+      } catch (err) {
+        res.status(err.code);
+        throw new Error(err.message);
+      }
+    } else {
+      res.status(403);
+      throw new Error('forbidden');
     }
   }
 }

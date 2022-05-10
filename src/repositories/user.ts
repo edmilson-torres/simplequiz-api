@@ -17,6 +17,10 @@ class UserRepository {
     return await UserModel.create(user);
   }
 
+  public async updateUser(id: string, name: string): Promise<User> {
+    return await UserModel.findByIdAndUpdate({ _id: id }, { name: name });
+  }
+
   public async deleteUser(id: string): Promise<Object> {
     return await UserModel.deleteOne({ _id: id });
   }
