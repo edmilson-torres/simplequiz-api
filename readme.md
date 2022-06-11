@@ -27,8 +27,6 @@ Making REST API to provide quizzes
 ✔️ register validator  
 ⬜ quiz validator  
 ✔️ admin middleware  
-⬜ password reset  
-⬜ refactor 1 file 1 function  
-⬜ strip logic from controllers and create services  
-⬜ swagger docs  
+✔️ strip logic from controllers and create services  
+✔️ swagger docs  
 ⬜ jest tests
