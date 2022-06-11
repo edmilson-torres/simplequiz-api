@@ -8,10 +8,10 @@ import rateLimitMiddleware from '../middlewares/rateLimit';
 const router = express.Router();
 
 router.use(
-  rateLimitMiddleware({
-    requestWindowInSeconds: 30,
-    maxConnections: 10
-  })
+    rateLimitMiddleware({
+        requestWindowInSeconds: 30,
+        maxConnections: 10
+    })
 );
 
 router.use(auth);

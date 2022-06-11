@@ -16,6 +16,10 @@
     ],
     "rules": {
         "semi": "off",
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "indent": [
+            "error",
+            4
+        ]
     }
 }

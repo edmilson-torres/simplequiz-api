@@ -5,44 +5,47 @@ import { compareStringHash } from '../utils/hash';
 import { signJwt } from '../utils/jwt';
 
 class AuthController {
-  public async login(req: Request, res: Response) {
-    const { email, password } = req.body;
+    public async login(req: Request, res: Response) {
+        const { email, password } = req.body;
 
-    if (!email || !password) {
-      res.status(422);
-      throw Error('user or password missing');
+        if (!email || !password) {
+            res.status(422);
+            throw Error('user or password missing');
+        }
+
+        const user = await UserRepository.findUserByEmail(email);
+
+        if (!user) {
+            res.status(401);
+            throw Error('user or password incorrect');
+        }
+
+        const passwordIsValid = await compareStringHash(
+            password,
+            user.password
+        );
+
+        if (!passwordIsValid) {
+            res.status(401);
+            throw Error('user or password incorrect');
+        }
+
+        try {
+            const payload: Object = { sub: user._id, role: user.role };
+            const token = signJwt(payload, {
+                expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
+            });
+            res.status(200).json({
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                token: token
+            });
+        } catch (err) {
+            res.status(500);
+            throw Error('server error');
+        }
     }
-
-    const user = await UserRepository.findUserByEmail(email);
-
-    if (!user) {
-      res.status(401);
-      throw Error('user or password incorrect');
-    }
-
-    const passwordIsValid = await compareStringHash(password, user.password);
-
-    if (!passwordIsValid) {
-      res.status(401);
-      throw Error('user or password incorrect');
-    }
-
-    try {
-      const payload: Object = { sub: user._id, role: user.role };
-      const token = signJwt(payload, {
-        expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
-      });
-      res.status(200).json({
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        token: token
-      });
-    } catch (err) {
-      res.status(500);
-      throw Error('server error');
-    }
-  }
 }
 
 export default AuthController;
