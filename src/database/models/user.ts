@@ -1,35 +1,39 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 
 export class User {
-  @prop({
-    required: true,
-    minlength: [2, 'too short'],
-    maxlength: [250, 'too long'],
-    trim: true
-  })
-  name: string;
+    @prop({
+        required: true,
+        minlength: 2,
+        maxlength: 250,
+        trim: true
+    })
+    name: string;
 
-  @prop({
-    required: true,
-    lowercase: true,
-    unique: true,
-    trim: true
-  })
-  email: string;
+    @prop({
+        isEmail: true,
+        required: true,
+        lowercase: true,
+        unique: true,
+        trim: true
+    })
+    email: string;
 
-  @prop({ default: 'user' })
-  role: string;
+    @prop({ default: 'user' })
+    role: string;
 
-  @prop({
-    required: true,
-    trim: true
-  })
-  password: string;
+    @prop({
+        required: true,
+        trim: true
+    })
+    password: string;
 
-  @prop({
-    default: new Date().toISOString()
-  })
-  createAt: Date;
+    @prop({
+        default: new Date().toISOString()
+    })
+    createAt: Date;
+
+    @prop()
+    updateAt: Date;
 }
 const UserModel = getModelForClass(User);
 
