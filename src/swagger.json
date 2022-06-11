@@ -442,35 +442,9 @@
           "questions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/questions"
+              "$ref": "#/components/schemas/question"
             }
           }
-        },
-        "example": {
-          "category": "new category",
-          "description": "example",
-          "name": "quiz example",
-          "createAt": "2022-03-21T01:31:42.020+00:00",
-          "questions": [
-            {
-              "question": "how to example 1?",
-              "answer": "right answer",
-              "options": [
-                "wrong  answer 1",
-                "wrong  answer 2",
-                "wrong  answer 3"
-              ]
-            },
-            {
-              "question": "how to example 2?",
-              "answer": "right answer",
-              "options": [
-                "wrong  answer 1",
-                "wrong  answer 2",
-                "wrong  answer 3"
-              ]
-            }
-          ]
         }
       },
       "question": {
