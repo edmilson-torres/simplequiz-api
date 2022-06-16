@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 
-import UserRepository from '../repositories/user';
-import { compareStringHash } from '../utils/hash';
-import { signJwt } from '../utils/jwt';
+import AuthService from '../services/auth';
 
 class AuthController {
     public async login(req: Request, res: Response) {
@@ -13,39 +11,18 @@ class AuthController {
             throw Error('user or password missing');
         }
 
-        const user = await UserRepository.findUserByEmail(email);
+        const user = await AuthService.login(email, password);
 
         if (!user) {
             res.status(401);
             throw Error('user or password incorrect');
         }
-
-        const passwordIsValid = await compareStringHash(
-            password,
-            user.password
-        );
-
-        if (!passwordIsValid) {
-            res.status(401);
-            throw Error('user or password incorrect');
-        }
-
-        try {
-            const payload: Object = { sub: user._id, role: user.role };
-            const token = signJwt(payload, {
-                expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
-            });
-            res.status(200).json({
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                token: token
-            });
-        } catch (err) {
-            res.status(500);
-            throw Error('server error');
-        }
+        res.status(200).json({ user });
     }
+
+    public async resetPassword(req: Request, res: Response) {}
+
+    public async resetPasswordRequest(req: Request, res: Response) {}
 }
 
 export default AuthController;
