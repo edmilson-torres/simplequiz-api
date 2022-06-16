@@ -19,10 +19,8 @@ export class Token {
         expires: 900
     })
     createAt: Date;
-
-    @prop()
-    updateAt: Date;
 }
+
 const TokenModel = getModelForClass(Token);
 
 export default TokenModel;
