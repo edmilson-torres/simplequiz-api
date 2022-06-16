@@ -13,7 +13,7 @@ class UserRepository {
         return await UserModel.find({}, '-password');
     }
 
-    public async createUser(user: User): Promise<User> {
+    public async createUser(user: Object) {
         return await UserModel.create(user);
     }
 

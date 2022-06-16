@@ -1,7 +1,6 @@
 import User from 'entities/user';
 import userValidator from '../utils/userValidator';
 import UserRepository from '../repositories/user';
-import UserModel from '../database/models/user';
 import { createStringHash } from '../utils/hash';
 
 class UserService {
@@ -26,13 +25,14 @@ class UserService {
         }
         const { name, email, password } = user;
         const passwordHased = await createStringHash(password);
-        const userModel = new UserModel({
+        const userModel = {
             name,
             email,
             password: passwordHased
-        });
+        };
         const result = await UserRepository.createUser(userModel);
-        return result;
+        const id = result._id;
+        return { name, email, id };
     }
 
     static async updateUser(id: string, name: string, userRoles?: string) {
