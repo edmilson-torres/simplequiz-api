@@ -18,17 +18,23 @@ class UserController {
     }
 
     public async findUserById(req: Request, res: Response) {
-        try {
-            const { id } = req.params;
-            const user = await UserService.findUserById(id);
-            if (!user) {
-                res.status(404);
+        const { sub, role } = res.locals.decodedToken;
+        const { id } = req.params;
+        if (role === 'admin' || sub === id) {
+            try {
+                const user = await UserService.findUserById(id);
+                if (!user) {
+                    res.status(404);
+                    throw new Error('user not found');
+                }
+                res.json(user);
+            } catch (err) {
+                res.status(422);
                 throw new Error('user not found');
             }
-            res.json(user);
-        } catch (err) {
-            res.status(422);
-            throw new Error('user not found');
+        } else {
+            res.status(401);
+            throw new Error('unauthorized');
         }
     }
 
