@@ -29,5 +29,5 @@ Making REST API to provide quizzes
 ✔️ admin middleware  
 ✔️ strip logic from controllers and create services  
 ✔️ swagger docs  
-⬜ password reset e-mail  
+✔️ password reset e-mail  
 ⬜ jest tests
