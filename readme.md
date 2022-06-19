@@ -2,7 +2,7 @@
 Making REST API to provide quizzes
 
 ## ⚙️ Technologies
-- Node.js, Expressjs, Typescript, MongoDB, JWT, Jest, CORS, Helmet, Rate-limit, Swagger, Prettier, ESlint
+- Node.js, Expressjs, Typescript, MongoDB, JWT, Nodemailer, Jest, CORS, Helmet, Rate-limit, Swagger, Prettier, ESlint
 
 ## 🖼️ API doc
 ![localhost_3000_api-docs_](https://user-images.githubusercontent.com/64763336/173191051-59d7be5f-e8f5-40d6-8be7-bfa56dcf81dc.png)
