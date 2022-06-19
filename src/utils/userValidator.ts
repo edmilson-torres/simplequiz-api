@@ -15,12 +15,12 @@ const schema = Yup.object().shape({
     role: Yup.mixed().oneOf(['admin', 'user'])
 });
 
-async function registerValidator(form: Object): Promise<boolean | string> {
+async function registerValidator(form: Object) {
     const result = await schema.isValid(form);
     const error = await schema.validate(form).catch((err) => err.errors);
 
     if (!result) {
-        return error.toString();
+        throw new Error(error)
     }
 
     return result;

@@ -14,17 +14,19 @@ class UserService {
         return user;
     }
 
+    static async findUserByEmail(email: string) {
+        const user = await UserRepository.findUserByEmail(email);
+        return user;
+    }
+
     static async deleteUser(id: string) {
         await UserRepository.deleteUser(id);
     }
 
     static async createUser(user: User) {
-        const validate = await userValidator(user);
-        if (typeof validate === 'string' || false) {
-            throw new Error(validate);
-        }
+        await userValidator(user);
         const { name, email, password } = user;
-        const passwordHased = await createStringHash(password);
+        const passwordHased = await createStringHash(password.toString());
         const userModel = {
             name,
             email,

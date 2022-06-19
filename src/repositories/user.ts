@@ -29,6 +29,14 @@ class UserRepository {
         );
     }
 
+    public async updatePassword(userId: string, hash: string) {
+        UserModel.updateOne(
+            { _id: userId },
+            { $set: { password: hash } },
+            { new: true }
+        );
+    }
+
     public async deleteUser(id: string): Promise<Object> {
         return await UserModel.deleteOne({ _id: id });
     }
