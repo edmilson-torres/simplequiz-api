@@ -30,11 +30,12 @@ class UserRepository {
     }
 
     public async updatePassword(userId: string, hash: string) {
-        UserModel.updateOne(
+        const user = UserModel.findOneAndUpdate(
             { _id: userId },
             { $set: { password: hash } },
             { new: true }
         );
+        return user
     }
 
     public async deleteUser(id: string): Promise<Object> {

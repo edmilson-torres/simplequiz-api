@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { prop, getModelForClass } from '@typegoose/typegoose';
 
-export class Token {
+export class ResetPasswordToken {
     @prop({
         required: true,
         ref: 'user'
@@ -21,6 +21,6 @@ export class Token {
     createAt: Date;
 }
 
-const TokenModel = getModelForClass(Token);
+const ResetPasswordTokenModel = getModelForClass(ResetPasswordToken);
 
-export default TokenModel;
+export default ResetPasswordTokenModel;
