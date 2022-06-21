@@ -117,6 +117,88 @@
         }
       }
     },
+    "/api/auth/requestresetpassword": {
+      "post": {
+        "summary": "User request reset password",
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Receive an email with a link to reset your password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "email"
+                ],
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "email of the user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
+    "/api/auth/resetpassword": {
+      "post": {
+        "summary": "User reset password",
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Reset your password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "userId",
+                  "password",
+                  "token"
+                ],
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string",
+                    "description": "Id of the user"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "new password of the user"
+                  },
+                  "token": {
+                    "type": "string",
+                    "description": "token received by e-mail"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "429": {
+            "description": "Too many request"
+          }
+        }
+      }
+    },
     "/api/users": {
       "get": {
         "summary": "User list",
