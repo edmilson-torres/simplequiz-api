@@ -2,15 +2,15 @@ import UserModel, { User } from '../database/models/user';
 
 class UserRepository {
     public async findUserById(id: string): Promise<User> {
-        return await UserModel.findById(id, '-password');
+        return await UserModel.findById(id, '-password').lean();
     }
 
     public async findUserByEmail(email: string) {
-        return await UserModel.findOne({ email: email });
+        return await UserModel.findOne({ email: email }).lean();
     }
 
     public async findUserList(): Promise<Array<User>> {
-        return await UserModel.find({}, '-password');
+        return await UserModel.find({}, '-password').lean();
     }
 
     public async createUser(user: Object) {

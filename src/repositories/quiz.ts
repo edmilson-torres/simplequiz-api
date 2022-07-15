@@ -12,12 +12,12 @@ class QuizRepository {
     }
 
     public async findQuizById(id: string) {
-        const quiz = await QuizModel.findById(id);
+        const quiz = await QuizModel.findById(id).lean();
         return quiz;
     }
 
     public async findQuizList() {
-        const quizList = await QuizModel.find({}, '-questions');
+        const quizList = await QuizModel.find({}, '-questions').lean();
         return quizList;
     }
 
