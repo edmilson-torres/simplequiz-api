@@ -1,7 +1,8 @@
 import User from 'entities/user';
-import userValidator from '../utils/userValidator';
+
 import UserRepository from '../repositories/user';
 import { createStringHash } from '../utils/hash';
+import userValidator from '../utils/userValidator';
 
 class UserService {
     static async findUsers() {
@@ -24,7 +25,10 @@ class UserService {
     }
 
     static async createUser(user: User) {
-        await userValidator(user);
+        const res = await userValidator(user);
+        if (typeof res === 'string') {
+            throw new Error(res);
+        }
         const { name, email, password } = user;
         const passwordHased = await createStringHash(password.toString());
         const userModel = {

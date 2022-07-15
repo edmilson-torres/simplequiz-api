@@ -20,7 +20,7 @@ async function registerValidator(form: Object) {
     const error = await schema.validate(form).catch((err) => err.errors);
 
     if (!result) {
-        throw new Error(error)
+        throw new Error(error[0]);
     }
 
     return result;
