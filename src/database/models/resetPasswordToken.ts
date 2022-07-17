@@ -1,12 +1,11 @@
-import * as mongoose from 'mongoose';
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { getModelForClass, prop } from '@typegoose/typegoose';
 
 export class ResetPasswordToken {
     @prop({
         required: true,
         ref: 'user'
     })
-    userId: mongoose.Types.ObjectId;
+    userId: string;
 
     @prop({
         required: true
