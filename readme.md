@@ -12,11 +12,18 @@ Making REST API to provide quizzes
 - Log: Morgan
 - Code analysis: ESlint  
 - Code formatter: Prettier  
+- E-mail tests with Mailtrap.io
 
 ## 🖼️ API docs
 ![localhost_3000_api-docs](https://user-images.githubusercontent.com/64763336/174910658-d74e0c1c-f852-46cf-b716-fcd6d576bba8.png)
 
 
+## 🚀 Running
+- Config `.env` with yours credentials
+- Install dependencies: `yarn`
+- Development use `yarn dev`
+- Build use `yarn build`
+- Start user `yarn start`
 
 ## 📑 TODO
 ✔️ get all quizzes  
