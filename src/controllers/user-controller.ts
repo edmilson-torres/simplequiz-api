@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import UserService from '../services/user-service';
 
 class UserController {
-    public async findUsers(res: Response) {
+    public async findUsers(req: Request, res: Response) {
         const { role } = res.locals.decodedToken;
         try {
             if (role === 'admin') {
