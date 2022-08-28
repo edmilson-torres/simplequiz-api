@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import AuthService from '../services/auth';
+import AuthService from '../services/auth-service';
 
 class AuthController {
     public async login(req: Request, res: Response) {
@@ -28,7 +28,7 @@ class AuthController {
                 message: 'password reset link sent to your email account '
             });
         } catch (err) {
-            res.status(400)
+            res.status(400);
             throw new Error(err.message);
         }
     }

@@ -1,6 +1,6 @@
 import User from 'entities/user';
 
-import UserRepository from '../repositories/user';
+import UserRepository from '../repositories/user-repository';
 import { createStringHash } from '../utils/hash';
 import userValidator from '../utils/userValidator';
 

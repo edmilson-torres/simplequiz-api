@@ -3,9 +3,9 @@ import bcrypt from 'bcrypt';
 
 import env from '../config/env';
 import ResetPasswordToken from '../database/models/resetPasswordToken';
-import UserRepository from '../repositories/user';
-import ResetPasswordTokenRepository from '../repositories/resetPasswordToken';
-import UserService from '../services/user';
+import UserRepository from '../repositories/user-repository';
+import ResetPasswordTokenRepository from '../repositories/token-repository';
+import UserService from '../services/user-service';
 import tokenValidator from '../utils/tokenValidator';
 import emailValidator from '../utils/emailValidator';
 import { compareStringHash } from '../utils/hash';
@@ -43,7 +43,7 @@ class AuthService {
     }
 
     static async resetPasswordRequest(email: string) {
-        await emailValidator({ email })
+        await emailValidator({ email });
         const user = await UserService.findUserByEmail(email);
         if (!user) {
             throw Error('email not registered');
@@ -81,21 +81,24 @@ class AuthService {
     ) {
         await tokenValidator(userId, password, token);
         try {
-            const passwordResetToken = await ResetPasswordTokenRepository.findById(userId);
+            const passwordResetToken =
+                await ResetPasswordTokenRepository.findById(userId);
             if (!passwordResetToken) {
                 throw new Error('invalid credentials');
             }
 
-            const isValid = await bcrypt.compare(token, passwordResetToken.token);
+            const isValid = await bcrypt.compare(
+                token,
+                passwordResetToken.token
+            );
             if (!isValid) {
                 throw new Error('invalid credentials');
             }
 
-            const pass = password.toString()
+            const pass = password.toString();
             const hash = await bcrypt.hash(pass, Number(12));
-            const user = await UserRepository.updatePassword(userId, hash)
+            const user = await UserRepository.updatePassword(userId, hash);
 
-            // const user = await UserRepository.findUserById(userId);
             sendEmail(
                 user.email,
                 'Password Reset Successfully',
@@ -104,11 +107,11 @@ class AuthService {
                 },
                 'templates/resetPassword.handlebars'
             );
-            await ResetPasswordTokenRepository.deleteToken(userId)
+            await ResetPasswordTokenRepository.deleteToken(userId);
 
             return user;
         } catch (err) {
-            throw new Error(err.message)
+            throw new Error(err.message);
         }
     }
 }

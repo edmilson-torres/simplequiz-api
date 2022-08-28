@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import QuizService from '../services/quiz';
+import QuizService from '../services/quiz-service';
 
 class QuizController {
     public async createQuiz(req: Request, res: Response) {
@@ -45,7 +45,7 @@ class QuizController {
         }
     }
 
-    public async findQuizList(req: Request, res: Response) {
+    public async findQuizList(res: Response) {
         try {
             const quizList = await QuizService.findQuizList();
             res.json(quizList);

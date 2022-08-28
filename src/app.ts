@@ -7,7 +7,7 @@ import morgan from 'morgan';
 import routes from './routes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json';
-import errorHandler from './middlewares/errorHandler';
+import errorHandler from './middlewares/errorHandler-middleware';
 
 import mongoose from 'mongoose';
 import server from './server';

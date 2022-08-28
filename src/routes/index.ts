@@ -1,9 +1,9 @@
 import express from 'express';
 
-import quiz from './quiz';
-import auth from './auth';
-import user from './user';
-import rateLimitMiddleware from '../middlewares/rateLimit';
+import quiz from './quiz-route';
+import auth from './auth-route';
+import user from './user-route';
+import rateLimitMiddleware from '../middlewares/rateLimit-middleware';
 
 const router = express.Router();
 
