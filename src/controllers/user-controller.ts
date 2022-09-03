@@ -58,7 +58,7 @@ class UserController {
                 res.status(409);
                 throw new Error('account already exists');
             } else {
-                res.status(404).json({ message: 'not found' });
+                res.status(400).json({ error: err.message });
             }
         }
     }
@@ -78,7 +78,7 @@ class UserController {
             );
             res.status(200).send(result);
         } catch (err) {
-            res.status(404).json({ message: 'not found' });
+            res.status(400).json({ error: err.message });
         }
     }
 }

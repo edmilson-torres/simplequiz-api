@@ -9,10 +9,12 @@ const schema = Yup.object().shape({
 
 async function userUpdateValidator(form: Object) {
     const result = await schema.isValid(form);
-    const error = await schema.validate(form).catch((err) => err.errors);
+    const error = await schema
+        .validate(form, { abortEarly: false })
+        .catch((err) => err.errors);
 
     if (!result) {
-        throw new Error(error[0]);
+        throw new Error(error);
     }
 
     return result;

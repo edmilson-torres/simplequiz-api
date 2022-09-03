@@ -11,16 +11,17 @@ const schema = Yup.object().shape({
     password: Yup.string()
         .min(6, 'Password must be longer than 6 characters')
         .max(255, 'Password must be less than 255 characters long')
-        .required('Password is required'),
-    role: Yup.mixed().oneOf(['admin', 'user'])
+        .required('Password is required')
 });
 
 async function userRegisterValidator(form: Object) {
     const result = await schema.isValid(form);
-    const error = await schema.validate(form).catch((err) => err.errors);
+    const error = await schema
+        .validate(form, { abortEarly: false })
+        .catch((err) => err.errors);
 
     if (!result) {
-        throw new Error(error[0]);
+        throw new Error(error);
     }
 
     return result;

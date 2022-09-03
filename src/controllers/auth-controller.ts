@@ -23,10 +23,16 @@ class AuthController {
     public async resetPasswordRequest(req: Request, res: Response) {
         const email = req.body.email;
         try {
-            await AuthService.resetPasswordRequest(email);
-            return res.status(200).json({
-                message: 'password reset link sent to your email account '
-            });
+            const mailLink = await AuthService.resetPasswordRequest(email);
+            if (process.env.NODE_ENV === 'production') {
+                return res.status(200).json({
+                    message: 'password reset link sent to your email account '
+                });
+            } else {
+                return res.status(200).json({
+                    testMailLink: mailLink
+                });
+            }
         } catch (err) {
             res.status(400);
             throw new Error(err.message);
