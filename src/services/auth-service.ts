@@ -11,6 +11,7 @@ import emailValidator from '../utils/emailValidator';
 import { compareStringHash } from '../utils/hash';
 import { signJwt } from '../utils/jwt';
 import { sendEmail } from '../utils/email/sendEmail';
+import { sendTestEmail } from '../utils/email/sendTestMail';
 
 class AuthService {
     static async login(email: string, password: string) {
@@ -61,17 +62,29 @@ class AuthService {
         }).save();
 
         const link = `${env.clientUrl}/password-reset/${user._id}/${resetToken}`;
-
-        sendEmail(
-            user.email,
-            'Password Reset Request',
-            {
-                name: user.name,
-                link: link
-            },
-            'templates/requestResetPassword.handlebars'
-        );
-        return true;
+        if (process.env.NODE_ENV === 'production') {
+            sendEmail(
+                user.email,
+                'Password Reset Request',
+                {
+                    name: user.name,
+                    link: link
+                },
+                'templates/requestResetPassword.handlebars'
+            );
+            return true;
+        } else {
+            sendTestEmail(
+                user.email,
+                'Password Reset Request',
+                {
+                    name: user.name,
+                    link: link
+                },
+                'templates/requestResetPassword.handlebars'
+            );
+            return true;
+        }
     }
 
     static async resetPassword(
