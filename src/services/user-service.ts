@@ -2,7 +2,8 @@ import User from 'entities/user';
 
 import UserRepository from '../repositories/user-repository';
 import { createStringHash } from '../utils/hash';
-import userValidator from '../utils/userValidator';
+import userRegisterValidator from '../utils/userRegisterValidator';
+import userUpdateValidator from '../utils/userUpdateValidator';
 
 class UserService {
     static async findUsers() {
@@ -25,7 +26,7 @@ class UserService {
     }
 
     static async createUser(user: User) {
-        const res = await userValidator(user);
+        const res = await userRegisterValidator(user);
         if (typeof res === 'string') {
             throw new Error(res);
         }
@@ -41,9 +42,27 @@ class UserService {
         return { name, email, id };
     }
 
-    static async updateUser(id: string, name: string, userRoles?: string) {
-        const result = await UserRepository.updateUser(id, name, userRoles);
-        return result;
+    static async updateUser(
+        sub: string,
+        role: string,
+        id: string,
+        requestName: string,
+        requestRole?: string
+    ) {
+        await userUpdateValidator({ name: requestName, role: requestRole });
+        try {
+            if (sub === id) {
+                return await UserRepository.updateUser(id, requestName);
+            } else if (role === 'admin') {
+                return await UserRepository.updateUser(
+                    id,
+                    requestName,
+                    requestRole
+                );
+            }
+        } catch (err) {
+            throw new Error(err.message);
+        }
     }
 }
 
