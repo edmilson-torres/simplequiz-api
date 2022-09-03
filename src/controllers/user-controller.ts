@@ -58,8 +58,7 @@ class UserController {
                 res.status(409);
                 throw new Error('account already exists');
             } else {
-                res.status(400);
-                throw new Error(err.message);
+                res.status(404).json({ message: 'not found' });
             }
         }
     }
@@ -67,31 +66,19 @@ class UserController {
     public async updateUser(req: Request, res: Response) {
         const { sub, role } = res.locals.decodedToken;
         const { id } = req.params;
-        const name = req.body.name;
-        const userRole = req.body.role;
+        const requestName = req.body.name;
+        const requestRole = req.body.role;
         try {
-            if (sub === id) {
-                const updatedUser = await UserService.updateUser(id, name);
-                res.status(200).json({
-                    message: 'user updated',
-                    data: updatedUser
-                });
-            } else if (role === 'admin') {
-                const updatedUser = await UserService.updateUser(
-                    id,
-                    name,
-                    userRole
-                );
-                res.status(200).json({
-                    message: 'user updated',
-                    data: updatedUser
-                });
-            } else {
-                res.status(401).json({ error: 'unauthorized' });
-            }
+            const result = await UserService.updateUser(
+                sub,
+                role,
+                id,
+                requestName,
+                requestRole
+            );
+            res.status(200).send(result);
         } catch (err) {
-            res.status(err.status);
-            throw new Error(err.message);
+            res.status(404).json({ message: 'not found' });
         }
     }
 }
