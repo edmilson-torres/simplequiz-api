@@ -15,7 +15,7 @@ const schema = Yup.object().shape({
     role: Yup.mixed().oneOf(['admin', 'user'])
 });
 
-async function registerValidator(form: Object) {
+async function userRegisterValidator(form: Object) {
     const result = await schema.isValid(form);
     const error = await schema.validate(form).catch((err) => err.errors);
 
@@ -26,4 +26,4 @@ async function registerValidator(form: Object) {
     return result;
 }
 
-export default registerValidator;
+export default userRegisterValidator;

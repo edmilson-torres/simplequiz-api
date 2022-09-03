@@ -1,4 +1,4 @@
-import tokenValidator from '@/utils/tokenValidator';
+import tokenValidator from '../../utils/tokenValidator';
 
 const mock = {
     userId: '507f1f77bcf86cd799439011',

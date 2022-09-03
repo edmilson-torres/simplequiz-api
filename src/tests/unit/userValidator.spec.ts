@@ -1,4 +1,4 @@
-import registerValidator from '@/utils/userValidator';
+import userRegisterValidator from '../../utils/userRegisterValidator';
 
 const mock = {
     name: 'Edmilson',
@@ -16,10 +16,10 @@ const invalidMock = {
 
 describe('User validator', () => {
     it('should return valid', async () => {
-        const res = await registerValidator(mock);
+        const res = await userRegisterValidator(mock);
         expect(res).toBe(true);
     });
     it('should return invalid', async () => {
-        await expect(registerValidator(invalidMock)).rejects.toThrow();
+        await expect(userRegisterValidator(invalidMock)).rejects.toThrow();
     });
 });
