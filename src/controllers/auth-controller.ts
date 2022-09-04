@@ -30,7 +30,7 @@ class AuthController {
                 });
             } else {
                 return res.status(200).json({
-                    testMailLink: mailLink
+                    link: mailLink
                 });
             }
         } catch (err) {

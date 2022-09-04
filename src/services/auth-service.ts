@@ -74,7 +74,7 @@ class AuthService {
             );
             return true;
         } else {
-            sendTestEmail(
+            const testMailLink = sendTestEmail(
                 user.email,
                 'Password Reset Request',
                 {
@@ -83,7 +83,7 @@ class AuthService {
                 },
                 'templates/requestResetPassword.handlebars'
             );
-            return true;
+            return testMailLink;
         }
     }
 
