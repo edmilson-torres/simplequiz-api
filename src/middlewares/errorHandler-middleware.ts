@@ -1,4 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import AppError from '../utils/appError';
+import { httpCode } from '../utils/httpCode';
 
 const errorHandler = (
     err: Error,
@@ -6,18 +8,15 @@ const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
-    const statusCode = res.statusCode ? res.statusCode : 500;
-    res.status(statusCode);
-    if (process.env.NODE_ENV === 'production') {
-        res.json({
-            error: err.message
-        });
-    } else {
-        res.json({
-            error: err.message,
-            stack: err.stack
-        });
+    if (err instanceof AppError) {
+        return res.status(err.statusCode).json({ message: err.message });
     }
+
+    console.log(err);
+
+    return res
+        .status(httpCode.INTERNAL_SERVER_ERROR)
+        .json({ message: 'internal server Error' });
 };
 
 export default errorHandler;
