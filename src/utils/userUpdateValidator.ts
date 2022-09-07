@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 const schema = Yup.object().shape({
+    id: Yup.string().length(24, 'Invalid Id'),
     name: Yup.string()
         .min(2, 'Name must be longer than 2 characters')
         .max(255, 'Name must be less than 255 characters long'),

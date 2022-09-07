@@ -2,10 +2,14 @@ import UserModel, { User } from '../database/models/user';
 
 class UserRepository {
     public async findUserById(id: string): Promise<User> {
-        return await UserModel.findById(id, '-password').lean();
+        return await UserModel.findById(id, [
+            '-createAt',
+            '-password',
+            '-__v'
+        ]).lean();
     }
 
-    public async findUserByEmail(email: string) {
+    public async findUserByEmail(email: string): Promise<string> {
         return await UserModel.findOne({ email: email }).lean();
     }
 
@@ -25,8 +29,8 @@ class UserRepository {
         return await UserModel.findByIdAndUpdate(
             { _id: id },
             { name: name, role: role },
-            { new: true }
-        );
+            { fields: { password: 0, __v: 0, createAt: 0 }, new: true }
+        ).lean();
     }
 
     public async updatePassword(userId: string, hash: string) {
@@ -35,7 +39,7 @@ class UserRepository {
             { $set: { password: hash } },
             { new: true }
         );
-        return user
+        return user;
     }
 
     public async deleteUser(id: string): Promise<Object> {

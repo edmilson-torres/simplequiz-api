@@ -7,7 +7,12 @@ import roleCheck from '../middlewares/roleCheck-middleware';
 const router = Router();
 const userController = new UserController();
 
-router.get('/users', validateToken, userController.findUsers);
+router.get(
+    '/users',
+    validateToken,
+    roleCheck(['admin']),
+    userController.findUsers
+);
 router.get('/users/:id', validateToken, userController.findUserById);
 router.delete(
     '/users/:id',

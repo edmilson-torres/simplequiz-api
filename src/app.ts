@@ -26,6 +26,7 @@ app.use(morgan('dev'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', routes);
+app.use('*', (req, res) => res.redirect('/api-docs'));
 
 app.use(errorHandler);
 

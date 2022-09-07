@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import AppError from '../utils/appError';
+import { httpCode } from '../utils/httpCode';
 
 type UserRoles = 'admin' | 'user';
 
@@ -8,8 +10,7 @@ const roleCheck = (rolesRoutes: Array<UserRoles>) => {
         const roleExists = rolesRoutes.includes(role);
 
         if (!roleExists) {
-            res.status(401);
-            throw new Error('unauthorized');
+            throw new AppError('unauthorized', httpCode.UNAUTHORIZED);
         }
 
         return next();
