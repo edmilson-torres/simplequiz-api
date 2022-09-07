@@ -1,15 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
+import { httpCode } from '../utils/httpCode';
+import AppError from '../utils/appError';
 import { verifyJwt } from '../utils/jwt';
 
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
-    const authHeaders = req.headers.authorization;
-
-    if (!authHeaders) {
-        res.status(401);
-        throw new Error('token is missing');
-    }
-
     const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        throw new AppError('token is missing', httpCode.UNAUTHORIZED);
+    }
 
     const decoded = verifyJwt(token);
 
@@ -17,8 +16,7 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
         res.locals.decodedToken = decoded;
         next();
     } else {
-        res.status(401);
-        throw new Error('unauthorized');
+        throw new AppError('token is missing', httpCode.UNAUTHORIZED);
     }
 };
 
