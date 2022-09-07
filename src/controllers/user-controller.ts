@@ -1,73 +1,58 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/user-service';
+import { httpCode } from '../utils/httpCode';
 
 class UserController {
-    public async findUsers(req: Request, res: Response) {
-        const { role } = res.locals.decodedToken;
+    public async findUsers(req: Request, res: Response, next: NextFunction) {
         try {
-            if (role === 'admin') {
-                const users = await UserService.findUsers();
-                res.json(users);
-            } else {
-                res.status(401).json({ error: 'unauthorized' });
-            }
+            const users = await UserService.findUsers();
+            res.json(users);
         } catch (err) {
-            res.status(404);
-            throw new Error('not found');
+            next(err);
         }
     }
 
-    public async findUserById(req: Request, res: Response) {
+    public async findUserById(req: Request, res: Response, next: NextFunction) {
         const { sub, role } = res.locals.decodedToken;
         const { id } = req.params;
-        if (role === 'admin' || sub === id) {
-            try {
-                const user = await UserService.findUserById(id);
-                if (!user) {
-                    res.status(404);
-                    throw new Error('user not found');
-                }
-                res.json(user);
-            } catch (err) {
-                res.status(422);
-                throw new Error('user not found');
-            }
-        } else {
-            res.status(401);
-            throw new Error('unauthorized');
+
+        try {
+            const result = await UserService.findUserById(id, sub, role);
+            res.send(result);
+        } catch (err) {
+            next(err);
         }
     }
 
-    public async deleteUser(req: Request, res: Response) {
+    public async deleteUser(req: Request, res: Response, next: NextFunction) {
         const { id } = req.params;
+
         try {
             await UserService.deleteUser(id);
-            res.json({ message: 'resource deleted successfully' });
+            res.status(httpCode.NO_CONTENT).send();
         } catch (err) {
-            res.status(404);
-            throw new Error('not found');
+            next(err);
         }
     }
 
-    public async createUser(req: Request, res: Response) {
+    public async createUser(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await UserService.createUser(req.body);
-            res.status(201).json({ message: 'user created', user: user });
+            res.status(httpCode.CREATED).json({
+                message: 'user created',
+                user: user
+            });
         } catch (err) {
-            if (err.code === 11000) {
-                res.status(409);
-                throw new Error('account already exists');
-            } else {
-                res.status(400).json({ error: err.message });
-            }
+            next(err);
         }
     }
 
-    public async updateUser(req: Request, res: Response) {
+    public async updateUser(req: Request, res: Response, next: NextFunction) {
         const { sub, role } = res.locals.decodedToken;
         const { id } = req.params;
         const requestName = req.body.name;
         const requestRole = req.body.role;
+
         try {
             const result = await UserService.updateUser(
                 sub,
@@ -76,9 +61,9 @@ class UserController {
                 requestName,
                 requestRole
             );
-            res.status(200).send(result);
+            res.send(result);
         } catch (err) {
-            res.status(400).json({ error: err.message });
+            next(err);
         }
     }
 }
