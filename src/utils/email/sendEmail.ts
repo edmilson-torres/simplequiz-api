@@ -13,7 +13,7 @@ export const sendEmail = async (
     try {
         const transporter = nodemailer.createTransport({
             host: env.emailHost,
-            port: +env.emailPort,
+            port: Number(env.emailPort),
             auth: {
                 user: env.emailUserName,
                 pass: env.emailPassword
