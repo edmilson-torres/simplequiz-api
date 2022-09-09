@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     "noEmit": false,
-    "noEmitOnError": false,
     "alwaysStrict": true,
     "esModuleInterop": true,
     "module": "commonjs",
@@ -18,25 +19,9 @@
     "rootDir": "./src/",
     "sourceMap": true,
     "lib": [
-      "es6",
-      "dom",
-      "es2017",
-      "es7"
+      "ES2021"
     ],
     "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "paths": {
-      "@/tests/*": [
-        "../tests/*"
-      ],
-      "@/*": [
-        "*"
-      ]
-    }
-  },
-  "include": [
-    "src",
-    "tests"
-  ],
+    "useUnknownInCatchVariables": false
+  }
 }
