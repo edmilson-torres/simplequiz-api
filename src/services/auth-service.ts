@@ -12,13 +12,17 @@ import { compareStringHash } from '../utils/hash';
 import { signJwt } from '../utils/jwt';
 import { sendEmail } from '../utils/email/sendEmail';
 import { sendTestEmail } from '../utils/email/sendTestMail';
+import User from '../entities/user';
+import AppError from 'utils/appError';
+import { httpCode } from 'utils/httpCode';
 
 class AuthService {
     static async login(email: string, password: string) {
-        const user = await UserRepository.findUserByEmail(email);
+        const user: User = await UserRepository.findUserByEmail(email);
         if (!user) {
             return false;
         }
+        const { id } = user;
         const passwordIsValid = await compareStringHash(
             password,
             user.password
@@ -28,12 +32,12 @@ class AuthService {
         }
 
         try {
-            const payload: Object = { sub: user._id, role: user.role };
+            const payload: Object = { sub: id, role: user.role };
             const token = signJwt(payload, {
                 expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
             });
             return {
-                id: user._id,
+                id: id,
                 name: user.name,
                 email: user.email,
                 token: token
@@ -45,23 +49,24 @@ class AuthService {
 
     static async resetPasswordRequest(email: string) {
         await emailValidator({ email });
-        const user = await UserService.findUserByEmail(email);
+        const user: User = await UserService.findUserByEmail(email);
         if (!user) {
             throw Error('email not registered');
         }
-        const token = await ResetPasswordToken.findOne({ userId: user._id });
+        const { id } = user;
+        const token = await ResetPasswordToken.findOne({ userId: id });
         if (token) await token.deleteOne();
 
         const resetToken = crypto.randomBytes(32).toString('hex');
         const hash = await bcrypt.hash(resetToken, 10);
 
         await new ResetPasswordToken({
-            userId: user._id,
+            userId: id,
             token: hash,
             createdAt: Date.now()
         }).save();
 
-        const link = `${env.clientUrl}/password-reset/${user._id}/${resetToken}`;
+        const link = `${env.clientUrl}/password-reset/${id}/${resetToken}`;
         if (process.env.NODE_ENV === 'production') {
             sendEmail(
                 user.email,
@@ -110,8 +115,16 @@ class AuthService {
 
             const pass = password.toString();
             const hash = await bcrypt.hash(pass, Number(12));
-            const user = await UserRepository.updatePassword(userId, hash);
-
+            const user: User = await UserRepository.updatePassword(
+                userId,
+                hash
+            );
+            if (!user) {
+                throw new AppError(
+                    'email not registered',
+                    httpCode.BAD_REQUEST
+                );
+            }
             sendEmail(
                 user.email,
                 'Password Reset Successfully',

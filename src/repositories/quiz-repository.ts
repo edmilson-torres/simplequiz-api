@@ -1,14 +1,20 @@
-import { Quiz, QuizModel } from '../database/models/quiz';
+import Quiz from '../entities/quiz';
+import { QuizModel } from '../database/models/quiz';
 
 class QuizRepository {
     public async createQuiz(quiz: Quiz) {
         return await QuizModel.create(quiz);
     }
 
-    public async updateQuiz(id: string, quiz: Object): Promise<Quiz> {
-        return await QuizModel.findByIdAndUpdate({ _id: id }, quiz, {
-            new: true
-        });
+    public async updateQuiz(id: string, quiz: Quiz): Promise<Quiz | null> {
+        const result: Quiz | null = await QuizModel.findByIdAndUpdate(
+            { _id: id },
+            quiz,
+            {
+                new: true
+            }
+        );
+        return result;
     }
 
     public async findQuizById(id: string) {

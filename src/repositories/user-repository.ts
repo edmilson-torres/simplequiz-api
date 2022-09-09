@@ -1,4 +1,5 @@
-import UserModel, { User } from '../database/models/user';
+import UserModel from '../database/models/user';
+import User from '../entities/user';
 
 class UserRepository {
     public async findUserById(id: string): Promise<User> {
@@ -9,7 +10,7 @@ class UserRepository {
         ]).lean();
     }
 
-    public async findUserByEmail(email: string): Promise<string> {
+    public async findUserByEmail(email: string): Promise<User> {
         return await UserModel.findOne({ email: email }).lean();
     }
 
@@ -33,13 +34,12 @@ class UserRepository {
         ).lean();
     }
 
-    public async updatePassword(userId: string, hash: string) {
-        const user = UserModel.findOneAndUpdate(
+    public async updatePassword(userId: string, hash: string): Promise<User> {
+        return UserModel.findOneAndUpdate(
             { _id: userId },
             { $set: { password: hash } },
             { new: true }
-        );
-        return user;
+        ).lean();
     }
 
     public async deleteUser(id: string): Promise<Object> {
