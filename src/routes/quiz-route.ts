@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import validateToken from '../middlewares/validateToken-middleware';
 import QuizController from '../controllers/quiz-controller';
-import roleCheck from '../middlewares/roleCheck-middleware';
+import roleCheck from '../middlewares/role-check-middleware';
 
 const router = Router();
 const quizController = new QuizController();

@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import validateToken from '../middlewares/validateToken-middleware';
 import UserController from '../controllers/user-controller';
-import roleCheck from '../middlewares/roleCheck-middleware';
+import roleCheck from '../middlewares/role-check-middleware';
 
 const router = Router();
 const userController = new UserController();
