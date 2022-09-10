@@ -1,10 +1,10 @@
 import AppError from '../utils/appError';
-import User from '../entities/user';
 import UserRepository from '../repositories/user-repository';
 import { createStringHash } from '../utils/hash';
 import userRegisterValidator from '../utils/userRegisterValidator';
 import userUpdateValidator from '../utils/userUpdateValidator';
 import { httpCode } from '../utils/httpCode';
+import User from '../entities/user';
 
 class UserService {
     static async findUsers() {

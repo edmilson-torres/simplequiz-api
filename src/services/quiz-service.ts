@@ -1,4 +1,4 @@
-import Quiz from 'entities/quiz';
+import Quiz from '../entities/quiz';
 
 import { QuizModel } from '../database/models/quiz';
 import QuizRepository from '../repositories/quiz-repository';

@@ -13,8 +13,8 @@ import { signJwt } from '../utils/jwt';
 import { sendEmail } from '../utils/email/sendEmail';
 import { sendTestEmail } from '../utils/email/sendTestMail';
 import User from '../entities/user';
-import AppError from 'utils/appError';
-import { httpCode } from 'utils/httpCode';
+import AppError from '../utils/appError';
+import { httpCode } from '../utils/httpCode';
 
 class AuthService {
     static async login(email: string, password: string) {
