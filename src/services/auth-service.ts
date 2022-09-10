@@ -56,7 +56,7 @@ class AuthService {
         await emailValidator({ email });
         const user = await UserService.findUserByEmail(email);
         if (!user) {
-            throw Error('email not registered');
+            throw new AppError('email not registered', httpCode.NOT_FOUND);
         }
         const { _id } = user;
         const token = ResetPasswordToken.findOne({ userId: _id });
