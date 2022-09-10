@@ -1,5 +1,11 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import {
+    prop,
+    getModelForClass,
+    modelOptions,
+    Severity
+} from '@typegoose/typegoose';
 
+@modelOptions({ options: { allowMixed: Severity.ALLOW } })
 class Question {
     @prop({ required: true, minlength: 2, maxlength: 250 })
     question: string;
