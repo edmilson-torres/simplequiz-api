@@ -24,7 +24,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGO_URL=mongodb://docker:mongopw@mongodb:27017
+      - MONGO_URL=mongodb://docker:mongopw@mongodb:27017/simpleQuiz?authSource=admin
       - NODE_ENV=development
       - PORT=3000
       - SECRET_JWT=6Ff9jO/spXB8uMVcMwZClIlKN/BzkH4hHVssMc/rEN6MWt4Y3Xdfbsw4AAI/jmDIjGE5EFf34sth7A7cu8xYiL534ShJ17z0t2Z8mr9pfa+QjvG6MjoT0TZDblT5OdqUpXDlxvlb6WATF6n7bWPdIShMaQgoNU7JTE06XwWF+LETg2COdYfFwirUXj6mhyG4QOhlt5cpGQf2NOxdWPvSJ5ZELPLL2SmlGsni3EigrXxPYCuFA3xI9pIafHhGp9wVBfVVmdalpgQ4gKFewbU6KK4A0sEmZI/PWZB60soLuSHKBWqfDgENGIyofN2X/qaB5NqcyypCz54lFFyB1VOi/Q==
