@@ -1,75 +1,66 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import QuizService from '../services/quiz-service';
+import { httpCode } from '../utils/httpCode';
 
 class QuizController {
-    public async createQuiz(req: Request, res: Response) {
+    public async createQuiz(req: Request, res: Response, next: NextFunction) {
         try {
             const quizCreated = await QuizService.create(req.body);
-
             return res
-                .status(201)
+                .status(httpCode.CREATED)
                 .json({ message: 'quiz created', quiz: quizCreated });
         } catch (err) {
-            if (err.code === 11000) {
-                res.status(409);
-                throw new Error('account already exists');
-            } else {
-                res.status(err.code);
-                throw new Error(err.message);
-            }
+            next(err);
         }
     }
 
-    public async updateQuiz(req: Request, res: Response) {
+    public async updateQuiz(req: Request, res: Response, next: NextFunction) {
         try {
             const data = req.body;
             const { id } = req.params;
-
             const quiz = await QuizService.update(id, data);
-            res.status(200).json({ message: 'quiz updated', quiz: quiz });
+            res.status(httpCode.OK).json({
+                message: 'quiz updated',
+                quiz: quiz
+            });
         } catch (err) {
-            res.status(err.code);
-            throw new Error(err.message);
+            next(err);
         }
     }
 
-    public async findQuiz(req: Request, res: Response) {
+    public async findQuiz(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
             const quiz = await QuizService.findQuiz(id);
-            res.status(200).json(quiz);
+            res.status(httpCode.OK).json(quiz);
         } catch (err) {
-            res.status(404);
-            throw new Error('not found');
+            next(err);
         }
     }
 
-    public async findQuizList(res: Response) {
+    public async findQuizList(req: Request, res: Response, next: NextFunction) {
         try {
             const quizList = await QuizService.findQuizList();
-            res.json(quizList);
+            res.status(httpCode.OK).json(quizList);
         } catch (err) {
-            res.status(404);
-            throw new Error('not found');
+            next(err);
         }
     }
 
-    public async deletequiz(req: Request, res: Response) {
+    public async deletequiz(req: Request, res: Response, next: NextFunction) {
         const { id } = req.params;
         try {
             await QuizService.findQuiz(id);
-        } catch (error) {
-            res.status(422);
-            throw new Error('quiz not found');
+        } catch (err) {
+            next(err);
         }
 
         try {
             await QuizService.deleteQuiz(id);
             res.json({ message: 'resource deleted successfully' });
         } catch (err) {
-            res.status(500);
-            throw new Error('server error');
+            next(err);
         }
     }
 }

@@ -1,7 +1,8 @@
 import Quiz from '../entities/quiz';
-
 import { QuizModel } from '../database/models/quiz';
 import QuizRepository from '../repositories/quiz-repository';
+import { httpCode } from '../utils/httpCode';
+import AppError from '../utils/appError';
 
 class QuizService {
     static async create(quiz: Quiz) {
@@ -17,9 +18,12 @@ class QuizService {
             length: questionsLength
         });
 
-        const quizCreated = await QuizRepository.createQuiz(quizModel);
-
-        return quizCreated;
+        try {
+            const quizCreated = await QuizRepository.createQuiz(quizModel);
+            return quizCreated;
+        } catch (err) {
+            throw new AppError(err.message, httpCode.BAD_REQUEST);
+        }
     }
 
     static async update(id: string, quiz: Quiz) {
@@ -34,24 +38,43 @@ class QuizService {
             questions: questions,
             length: length
         };
-
-        const quizUpdated = await QuizRepository.updateQuiz(id, quizData);
-
-        return quizUpdated;
+        try {
+            const quizUpdated = await QuizRepository.updateQuiz(id, quizData);
+            if (!quizUpdated) {
+                throw new AppError('not found', httpCode.NOT_FOUND);
+            }
+            return quizUpdated;
+        } catch (err) {
+            throw new AppError('not found', httpCode.NOT_FOUND);
+        }
     }
 
     static async findQuiz(id: string) {
-        const quiz = await QuizRepository.findQuizById(id);
-        return quiz;
+        try {
+            const quiz = await QuizRepository.findQuizById(id);
+            if (!quiz) {
+                throw new AppError('not found', httpCode.NOT_FOUND);
+            }
+            return quiz;
+        } catch (err) {
+            throw new AppError('not found', httpCode.NOT_FOUND);
+        }
     }
 
     static async findQuizList() {
-        const quizList = await QuizRepository.findQuizList();
-        return quizList;
+        try {
+            return await QuizRepository.findQuizList();
+        } catch (err) {
+            throw new AppError('not found', httpCode.NOT_FOUND);
+        }
     }
 
     static async deleteQuiz(id: string) {
-        await QuizRepository.deleteQuiz(id);
+        try {
+            await QuizRepository.deleteQuiz(id);
+        } catch (err) {
+            throw new AppError('not found', httpCode.NOT_FOUND);
+        }
     }
 }
 

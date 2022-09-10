@@ -3,33 +3,25 @@ import { QuizModel } from '../database/models/quiz';
 
 class QuizRepository {
     public async createQuiz(quiz: Quiz) {
-        return await QuizModel.create(quiz);
+        return QuizModel.create(quiz);
     }
 
     public async updateQuiz(id: string, quiz: Quiz): Promise<Quiz | null> {
-        const result: Quiz | null = await QuizModel.findByIdAndUpdate(
-            { _id: id },
-            quiz,
-            {
-                new: true
-            }
-        );
-        return result;
+        return QuizModel.findByIdAndUpdate({ _id: id }, quiz, {
+            new: true
+        });
     }
 
     public async findQuizById(id: string) {
-        const quiz = await QuizModel.findById(id).lean();
-        return quiz;
+        return QuizModel.findById(id).lean();
     }
 
     public async findQuizList() {
-        const quizList = await QuizModel.find({}, '-questions').lean();
-        return quizList;
+        return QuizModel.find({}, '-questions').lean();
     }
 
     public async deleteQuiz(id: string) {
-        const deletedquiz = await QuizModel.deleteOne({ _id: id });
-        return deletedquiz;
+        return QuizModel.deleteOne({ _id: id });
     }
 }
 
