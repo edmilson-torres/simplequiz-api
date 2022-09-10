@@ -1,6 +1,9 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
+import { ObjectId } from 'mongoose';
 
 export class User {
+    _id: ObjectId;
+
     @prop({
         required: true,
         minlength: 2,
