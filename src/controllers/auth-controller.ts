@@ -1,56 +1,65 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import AuthService from '../services/auth-service';
+import AppError from '../utils/appError';
+import { httpCode } from '../utils/httpCode';
 
 class AuthController {
-    public async login(req: Request, res: Response) {
+    public async login(req: Request, res: Response, next: NextFunction) {
         const { email, password } = req.body;
-
         if (!email || !password) {
-            res.status(422);
-            throw new Error('user or password missing');
+            throw new AppError(
+                'user or password missing',
+                httpCode.BAD_REQUEST
+            );
         }
 
-        const user = await AuthService.login(email, password);
-
-        if (!user) {
-            res.status(401);
-            throw new Error('user or password incorrect');
+        try {
+            const user = await AuthService.login(email, password);
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
         }
-        res.status(200).json({ user });
     }
 
-    public async resetPasswordRequest(req: Request, res: Response) {
+    public async resetPasswordRequest(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
         const email = req.body.email;
         try {
             const mailLink = await AuthService.resetPasswordRequest(email);
             if (process.env.NODE_ENV === 'production') {
-                return res.status(200).json({
+                return res.status(httpCode.OK).json({
                     message: 'password reset link sent to your email account '
                 });
             } else {
-                return res.status(200).json({
+                return res.status(httpCode.OK).json({
                     link: mailLink
                 });
             }
         } catch (err) {
-            res.status(400);
-            throw new Error(err.message);
+            next(err);
         }
     }
 
-    public async resetPassword(req: Request, res: Response) {
+    public async resetPassword(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
         const { userId, password, token } = req.body;
         if (!token || !userId || !password) {
-            res.status(400);
-            throw new Error('invalid credentials');
+            throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
         }
         try {
             await AuthService.resetPassword(userId, password, token);
-            res.status(200).json({ message: 'password reset successfully' });
+            res.status(httpCode.OK).json({
+                message: 'password reset successfully'
+            });
         } catch (err) {
-            res.status(400);
-            throw new Error(err.message);
+            next(err);
         }
     }
 }
