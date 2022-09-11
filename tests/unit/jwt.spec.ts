@@ -1,4 +1,4 @@
-import { signJwt, verifyJwt } from '@/utils/jwt';
+import { signJwt, verifyJwt } from '../../src/utils/jwt';
 
 const payload = {
     sub: '507f1f77bcf86cd799439011',
