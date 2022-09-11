@@ -1,27 +1,26 @@
 {
   "compilerOptions": {
-    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "noEmit": false,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "target": "ES6",
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src/",
+    "module": "commonjs",
+    "target": "es2019",
+    "esModuleInterop": true,
     "sourceMap": true,
-    "lib": [
-      "ES2021"
+    "rootDirs": [
+      "src"
     ],
-    "resolveJsonModule": true,
-    "useUnknownInCatchVariables": false
-  }
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": []
 }
