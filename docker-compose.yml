@@ -4,7 +4,6 @@ volumes:
   data:
 
 services:
-# https://github.com/ashleydavis/docker-compose-nodejs-with-typescript-example
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -16,6 +15,14 @@ services:
     volumes:
       - data:/data/db
     restart: always
+
+  db-seed:
+    image: db-seed
+    build: ./seed
+    container_name: db-seed
+    depends_on:
+      - mongodb
+
   app:
     container_name: simplequiz
     build: ./

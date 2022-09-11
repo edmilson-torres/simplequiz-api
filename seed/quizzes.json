@@ -1,0 +1,369 @@
+[{
+  "_id": {
+    "$oid": "622e7790d66360235541d2f7"
+  },
+  "name": "Capitais do Norte",
+  "description": "Capitais da região Norte do Brasil ",
+  "category": "geografia",
+  "questions": [
+    {
+      "question": "Qual é o nome da capital de Pará?",
+      "answer": "Belém",
+      "options": [
+        "Belo Horizonte",
+        "Rio Branco",
+        "Boa Vista"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital de Roraima?",
+      "answer": "Boa Vista",
+      "options": [
+        "Brasília",
+        "Belém",
+        "Rio Branco"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital do Amapá?",
+      "answer": "Macapá",
+      "options": [
+        "Maceió",
+        "Boa Vista",
+        "Manaus"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital do Amazonas?",
+      "answer": "Manaus",
+      "options": [
+        "Aracaju",
+        "Macapá",
+        "Belém"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital de Tocantins?",
+      "answer": "Palmas",
+      "options": [
+        "Porto Alegre",
+        "Manaus",
+        "Porto Velho"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital de Rondônia?",
+      "answer": "Porto Velho",
+      "options": [
+        "Campo Grande",
+        "Palmas",
+        "Rio Branco"
+      ]
+    },
+    {
+      "question": "Qual é o nome da capital do Acre?",
+      "answer": "Rio Branco",
+      "options": [
+        "Rio de Janeiro",
+        "Porto Velho",
+        "Palmas"
+      ]
+    }
+  ],
+  "length": 7,
+  "createAt": {
+    "$date": "2022-03-21T01:31:42.020Z"
+  }
+},{
+  "_id": {
+    "$oid": "622ea8136b84d67dea1d0a16"
+  },
+  "name": "Capitais do Nordeste",
+  "description": "Capitais da região Nordeste do Brasil ",
+  "category": "geografia",
+  "questions": [
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a08"
+      },
+      "question": "Qual é o nome da capital de Maranhão?",
+      "answer": "São Luís",
+      "options": [
+        "Belo Horizonte",
+        "Maceió",
+        "Teresina"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a09"
+      },
+      "question": "Qual é o nome da capital do Piauí?",
+      "answer": "Teresina",
+      "options": [
+        "São Luís",
+        "Belém",
+        "Rio Branco"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a0a"
+      },
+      "question": "Qual é o nome da capital do Ceará?",
+      "answer": "Fortaleza",
+      "options": [
+        "Maceió",
+        "Boa Vista",
+        "Manaus"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a0b"
+      },
+      "question": "Qual é o nome da capital do Rio Grande do Norte?",
+      "answer": "Natal",
+      "options": [
+        "João Pessoa",
+        "Natal",
+        "Belém"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a0c"
+      },
+      "question": "Qual é o nome da capital da Paraíba?",
+      "answer": "João Pessoa",
+      "options": [
+        "Recife",
+        "Aracaju",
+        "Porto Velho"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a0d"
+      },
+      "question": "Qual é o nome da capital de Pernambuco?",
+      "answer": "Recife",
+      "options": [
+        "Campo Grande",
+        "Maceió",
+        "Natal"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622e976f6b84d67dea1d0a0e"
+      },
+      "question": "Qual é o nome da capital de Alagoas?",
+      "answer": "Maceió",
+      "options": [
+        "Rio de Janeiro",
+        "Recife",
+        "Aracaju"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622f612ddede5c4c77c70fdf"
+      },
+      "question": "Qual é o nome da capital do Sergipe?",
+      "answer": "Aracaju",
+      "options": [
+        "João Pessoa",
+        "Natal",
+        "Palmas"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "622f613051926df2789fa288"
+      },
+      "question": "Qual é o nome da capital da Bahia?",
+      "answer": "Salvador",
+      "options": [
+        "Fortaleza",
+        "Porto Velho",
+        "Teresina"
+      ]
+    }
+  ],
+  "length": 9,
+  "createAt": {
+    "$date": "2022-03-21T01:31:42.020Z"
+  }
+},{
+  "_id": {
+    "$oid": "6230900edd3d524437a8065d"
+  },
+  "name": "Comandos Git",
+  "description": "Principais comandos do Git",
+  "category": "Versionamento",
+  "questions": [
+    {
+      "_id": {
+        "$oid": "6230900edd3d524437a8065d"
+      },
+      "question": "Para criar um novo projeto",
+      "answer": "git init",
+      "options": [
+        "git config",
+        "git clone",
+        "git branch"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623090b0be1f8976d8ba941e"
+      },
+      "question": "Para copiar repositório remoto",
+      "answer": "git clone",
+      "options": [
+        "git checkout",
+        "git copy",
+        "git remote"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "62309136c5bb90d85f2d6847"
+      },
+      "question": "Mostra informações atuais do seu repositório",
+      "answer": "git status",
+      "options": [
+        "git info",
+        "git checkout",
+        "git stash"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "62309364ee86d86caf8acf30"
+      },
+      "question": "Adiciona arquivos na área de 'stage'",
+      "answer": "git add",
+      "options": [
+        "git push",
+        "git commit",
+        "git branch"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623094c4a789f0107dc0dc14"
+      },
+      "question": "Registra alterações no repositório",
+      "answer": "git commit",
+      "options": [
+        "git add",
+        "git push",
+        "git pull"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623095dfeccce372a109951f"
+      },
+      "question": "Vincular o repositório local com um repositório remoto",
+      "answer": "git remote",
+      "options": [
+        "git clone",
+        "git pull",
+        "git branch"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623096e11f9433b87afbb9ac"
+      },
+      "question": "Obtém atualizações do repositório remoto",
+      "answer": "git pull",
+      "options": [
+        "git push",
+        "git clone",
+        "git commit"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "6230979130ce47fb54595e77"
+      },
+      "question": "Envia atualizações para repositório remoto",
+      "answer": "git push",
+      "options": [
+        "git pull",
+        "git remote",
+        "git send"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623098de95267b40398f2ea8"
+      },
+      "question": "Exibe os registros log do commit",
+      "answer": "git log",
+      "options": [
+        "git status",
+        "git list",
+        "git config"
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "623098e0d36630a79e2a0c33"
+      },
+      "question": "Obtém ou define as configurações do repositório",
+      "answer": "git config",
+      "options": [
+        "git name",
+        "git email",
+        "git set"
+      ]
+    }
+  ],
+  "length": 10,
+  "createAt": {
+    "$date": "2022-03-21T01:31:42.020Z"
+  }
+},{
+  "_id": {
+    "$oid": "630a8986c9d80c805d900d10"
+  },
+  "name": "quiz example",
+  "description": "example",
+  "category": "new category",
+  "length": 2,
+  "questions": [
+    {
+      "question": "how to example 1?",
+      "answer": "right answer",
+      "options": [
+        "wrong  answer 1",
+        "wrong  answer 2",
+        "wrong  answer 3"
+      ],
+      "_id": {
+        "$oid": "630a8986c9d80c805d900d11"
+      }
+    },
+    {
+      "question": "how to example 2?",
+      "answer": "right answer",
+      "options": [
+        "wrong  answer 1",
+        "wrong  answer 2",
+        "wrong  answer 3"
+      ],
+      "_id": {
+        "$oid": "630a8986c9d80c805d900d12"
+      }
+    }
+  ],
+  "createAt": {
+    "$date": "2022-08-27T21:13:12.993Z"
+  },
+  "__v": 0
+}]
