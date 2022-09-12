@@ -49,3 +49,5 @@ export class Quiz {
 }
 
 export const QuizModel = getModelForClass(Quiz);
+
+export default QuizModel;
