@@ -17,6 +17,7 @@
     "test": "jest --passWithNoTests --runInBand --no-cache"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.0",
     "@typegoose/typegoose": "^9.11.2",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
@@ -54,6 +55,7 @@
     "handlebars": "^4.7.7",
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.9.1",
     "mongoose": "^6.5.3",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.5",

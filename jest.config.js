@@ -1,6 +1,6 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-    preset: 'ts-jest',
+    preset: '@shelf/jest-mongodb',
     roots: ['<rootDir>/tests'],
     collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
     coverageDirectory: 'coverage',
@@ -9,8 +9,5 @@ module.exports = {
     transform: {
         '.+\\.ts$': 'ts-jest'
     },
-    moduleNameMapper: {
-        '@/tests/(.*)': '<rootDir>/tests/$1',
-        '@/(.*)': '<rootDir>/src/$1'
-    }
+    setupFiles: ['dotenv/config']
 };
