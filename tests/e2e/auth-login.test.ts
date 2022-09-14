@@ -22,6 +22,7 @@ describe('E2E Auth login', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
+
     it('should sign in', async () => {
         const res = await request(app).post('/api/auth/login').send({
             email: 'test@mail.com',
