@@ -73,7 +73,7 @@ class AuthService {
 
         const link = `${env.clientUrl}/password-reset/${_id}/${resetToken}`;
         if (process.env.NODE_ENV === 'production') {
-            sendEmail(
+            await sendEmail(
                 user.email,
                 'Password Reset Request',
                 {
@@ -84,7 +84,7 @@ class AuthService {
             );
             return true;
         } else {
-            const testMailLink = sendTestEmail(
+            const testMailLink = await sendTestEmail(
                 user.email,
                 'Password Reset Request',
                 {
