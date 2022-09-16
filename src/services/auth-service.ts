@@ -48,12 +48,16 @@ class AuthService {
                 token: token
             };
         } catch (err) {
-            throw new AppError('err.message', httpCode.BAD_REQUEST);
+            throw new Error('err.message');
         }
     }
 
     static async resetPasswordRequest(email: string) {
-        await emailValidator({ email });
+        try {
+            await emailValidator({ email });
+        } catch (err) {
+            throw new AppError('invalid e-mail', httpCode.BAD_REQUEST);
+        }
         const user = await UserService.findUserByEmail(email);
         if (!user) {
             throw new AppError('email not registered', httpCode.NOT_FOUND);
