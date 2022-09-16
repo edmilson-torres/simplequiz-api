@@ -23,7 +23,7 @@ describe('E2E Auth login', () => {
         jest.clearAllMocks();
     });
 
-    it('should sign in', async () => {
+    it('should sign in an return a token', async () => {
         const res = await request(app).post('/api/auth/login').send({
             email: 'test@mail.com',
             password: '123456'
@@ -35,6 +35,13 @@ describe('E2E Auth login', () => {
         const res = await request(app).post('/api/auth/login').send({
             email: 'admin@mail.com',
             password: '12345'
+        });
+        expect(res.statusCode).toBe(400);
+    });
+
+    it('should not sign in, missing user e-mail', async () => {
+        const res = await request(app).post('/api/auth/login').send({
+            password: '123456'
         });
         expect(res.statusCode).toBe(400);
     });
