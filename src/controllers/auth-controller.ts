@@ -27,7 +27,11 @@ class AuthController {
         res: Response,
         next: NextFunction
     ) {
-        const email = req.body.email;
+        const email: string = req.body.email;
+        if (!email) {
+            throw new AppError('e-mail is missing', httpCode.BAD_REQUEST);
+        }
+
         try {
             const mailLink = await AuthService.resetPasswordRequest(email);
             if (process.env.NODE_ENV === 'production') {
