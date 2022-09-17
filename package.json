@@ -15,9 +15,9 @@
     "prettier": "prettier --check src/**/*.ts",
     "prettier:fix": "prettier --write src/**/*.ts",
     "test": "jest --passWithNoTests --runInBand --no-cache --silent",
-    "test:unit": "npm test -- -c jest-unit-config.js",
-    "test:integration": "npm test -- -c jest-integration-config.js",
-    "test:covarage": "jest --coverage --collectCoverageFrom='./src/**'"
+    "test:unit": "yarn test -c jest-unit-config.js",
+    "test:integration": "yarn test -c jest-integration-config.js",
+    "test:covarage": "yarn test --coverage --collectCoverageFrom='./src/**'"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^4.1.0",
