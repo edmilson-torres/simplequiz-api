@@ -1,26 +1,21 @@
-import mongoose from 'mongoose';
 import request from 'supertest';
 import app from '../../src/app';
+
+import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
 import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
 
-beforeAll(async () => {
-    await UserModel.insertMany(users);
-    await QuizModel.insertMany(quizzies);
-});
-
-afterAll(() => {
-    mongoose.connection.close();
-});
-
-describe('E2E Auth login', () => {
-    afterAll((done) => {
-        mongoose.disconnect(done);
+describe('Integration Auth login', () => {
+    beforeAll(async () => {
+        await UserModel.insertMany(users);
+        await QuizModel.insertMany(quizzies);
     });
-    beforeEach(() => {
-        jest.clearAllMocks();
+    afterAll(async () => {
+        await QuizModel.deleteMany();
+        await UserModel.deleteMany();
+        await mongoose.disconnect();
     });
 
     it('should sign in an return a token', async () => {
