@@ -55,7 +55,7 @@ class AuthController {
     ) {
         const { userId, password, token } = req.body;
         if (!token || !userId || !password) {
-            throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
+            throw new AppError('missing credentials', httpCode.BAD_REQUEST);
         }
         try {
             await AuthService.resetPassword(userId, password, token);
