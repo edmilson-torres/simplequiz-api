@@ -1,14 +1,12 @@
 import crypto from 'crypto';
-import bcrypt from 'bcrypt';
 
 import env from '../config/env';
-import ResetPasswordToken from '../database/models/resetPasswordToken';
 import UserRepository from '../repositories/user-repository';
 import ResetPasswordTokenRepository from '../repositories/token-repository';
 import UserService from '../services/user-service';
 import tokenValidator from '../utils/tokenValidator';
 import emailValidator from '../utils/emailValidator';
-import { compareStringHash } from '../utils/hash';
+import { compareStringHash, createStringHash } from '../utils/hash';
 import { signJwt } from '../utils/jwt';
 import { sendEmail } from '../utils/email/sendEmail';
 import { sendTestEmail } from '../utils/email/sendTestMail';
@@ -63,17 +61,13 @@ class AuthService {
             throw new AppError('email not registered', httpCode.NOT_FOUND);
         }
         const { _id } = user;
-        const token = ResetPasswordToken.findOne({ userId: _id });
-        if (token) token.deleteOne();
+        const token = ResetPasswordTokenRepository.findById(String(_id));
+        if (token) ResetPasswordTokenRepository.deleteToken(String(_id));
 
         const resetToken = crypto.randomBytes(32).toString('hex');
-        const hash = await bcrypt.hash(resetToken, 10);
-
-        await new ResetPasswordToken({
-            userId: _id,
-            token: hash,
-            createdAt: Date.now()
-        }).save();
+        const hash = await createStringHash(resetToken);
+        const userToken = { userId: _id, token: hash };
+        await ResetPasswordTokenRepository.insertUserToken(userToken);
 
         const link = `${env.clientUrl}/password-reset/${_id}/${resetToken}`;
         if (process.env.NODE_ENV === 'production') {
@@ -109,12 +103,12 @@ class AuthService {
         await tokenValidator(userId, password, token);
         try {
             const passwordResetToken =
-                await ResetPasswordTokenRepository.findById(userId);
+                ResetPasswordTokenRepository.findById(userId);
             if (!passwordResetToken) {
                 throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
             }
 
-            const isValidToken = await bcrypt.compare(
+            const isValidToken = await compareStringHash(
                 token,
                 passwordResetToken.token
             );
@@ -123,7 +117,7 @@ class AuthService {
             }
 
             const pass = password.toString();
-            const hash = await bcrypt.hash(pass, Number(12));
+            const hash = await createStringHash(pass);
             const user = await UserRepository.updatePassword(userId, hash);
             if (!user) {
                 throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
@@ -136,7 +130,7 @@ class AuthService {
                 },
                 'templates/resetPassword.handlebars'
             );
-            await ResetPasswordTokenRepository.deleteToken(userId);
+            ResetPasswordTokenRepository.deleteToken(userId);
         } catch (err) {
             throw new AppError(err.message, err.statusCode);
         }
