@@ -1,12 +1,16 @@
 import ResetPasswordTokenModel from '../database/models/resetPasswordToken';
 
 class ResetPasswordTokenRepository {
-    public async findById(id: string) {
-        return await ResetPasswordTokenModel.findOne({ id }).lean();
+    public findById(id: string) {
+        return ResetPasswordTokenModel.findOne({ _id: id }).lean();
     }
 
-    public async deleteToken(id: string) {
-        return await ResetPasswordTokenModel.deleteOne({ id });
+    public deleteToken(id: string) {
+        return ResetPasswordTokenModel.deleteOne({ _id: id });
+    }
+
+    public insertUserToken(userToken: Object) {
+        return ResetPasswordTokenModel.create(userToken);
     }
 }
 export default new ResetPasswordTokenRepository();
