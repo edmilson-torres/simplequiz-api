@@ -3,17 +3,13 @@ import app from '../../src/app';
 
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
-import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
-import { quizzies } from '../mock/quizzies';
 
 describe('Integration Auth login', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
-        await QuizModel.insertMany(quizzies);
     });
     afterAll(async () => {
-        await QuizModel.deleteMany();
         await UserModel.deleteMany();
         await mongoose.disconnect();
     });
@@ -26,7 +22,7 @@ describe('Integration Auth login', () => {
         expect(res.body.user).toHaveProperty('token');
     });
 
-    it('should not sign in, wrong password', async () => {
+    it('should not sign in, invalid password', async () => {
         const res = await request(app).post('/api/auth/login').send({
             email: 'admin@mail.com',
             password: '12345'

@@ -5,17 +5,13 @@ import * as sendTestEmail from '../../src/utils/email/sendTestMail';
 
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
-import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
-import { quizzies } from '../mock/quizzies';
 
 describe('Integration Auth request reset password', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
-        await QuizModel.insertMany(quizzies);
     });
     afterAll(async () => {
-        await QuizModel.deleteMany();
         await UserModel.deleteMany();
         await mongoose.disconnect();
     });
