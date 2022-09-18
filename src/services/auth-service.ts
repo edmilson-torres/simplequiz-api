@@ -103,7 +103,7 @@ class AuthService {
         await tokenValidator(userId, password, token);
         try {
             const passwordResetToken =
-                ResetPasswordTokenRepository.findById(userId);
+                await ResetPasswordTokenRepository.findById(userId);
             if (!passwordResetToken) {
                 throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
             }
@@ -130,7 +130,7 @@ class AuthService {
                 },
                 'templates/resetPassword.handlebars'
             );
-            ResetPasswordTokenRepository.deleteToken(userId);
+            await ResetPasswordTokenRepository.deleteToken(userId);
         } catch (err) {
             throw new AppError(err.message, err.statusCode);
         }
