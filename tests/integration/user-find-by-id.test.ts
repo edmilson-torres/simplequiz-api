@@ -42,6 +42,6 @@ describe('Integration User find by id', () => {
             .get('/api/users')
             .set('Authorization', `Bearer ${login.body.user.token}`);
         expect(res.statusCode).toBe(403);
-        expect(res.body.error).toBe('unauthorized');
+        expect(res.body.error).toBe('forbidden');
     });
 });
