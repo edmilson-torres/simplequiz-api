@@ -1,8 +1,15 @@
 import ResetPasswordTokenModel from '../database/models/resetPasswordToken';
 
+interface FindByIdProtocol {
+    userId: string;
+    token: string;
+}
 class ResetPasswordTokenRepository {
-    public findById(id: string) {
-        return ResetPasswordTokenModel.findOne({ userId: id });
+    public findById(id: string): FindByIdProtocol {
+        const { userId, token } = ResetPasswordTokenModel.findOne({
+            userId: id
+        });
+        return { userId, token };
     }
 
     public deleteToken(id: string) {
