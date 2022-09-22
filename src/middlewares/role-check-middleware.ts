@@ -10,7 +10,7 @@ const roleCheck = (rolesRoutes: Array<UserRoles>) => {
         const roleExists = rolesRoutes.includes(role);
 
         if (!roleExists) {
-            throw new AppError('unauthorized', httpCode.UNAUTHORIZED);
+            throw new AppError('forbidden', httpCode.FORBIDDEN);
         }
 
         return next();
