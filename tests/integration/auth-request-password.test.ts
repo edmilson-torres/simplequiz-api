@@ -25,7 +25,6 @@ describe('Integration Auth request reset password', () => {
             .send({ email: 'test@mail.com' });
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toHaveProperty('link');
         expect(res.body.link).toBe('tokenMock');
         expect(spy).toBeCalledTimes(1);
     });
