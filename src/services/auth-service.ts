@@ -61,12 +61,12 @@ class AuthService {
             throw new AppError('email not registered', httpCode.NOT_FOUND);
         }
         const { _id } = user;
-        const token = ResetPasswordTokenRepository.findById(String(_id));
-        if (token) ResetPasswordTokenRepository.deleteToken(String(_id));
+        const token = await ResetPasswordTokenRepository.findById(String(_id));
+        if (token) await ResetPasswordTokenRepository.deleteToken(String(_id));
 
         const resetToken = crypto.randomBytes(32).toString('hex');
         const hash = await createStringHash(resetToken);
-        const userToken = { userId: _id, token: hash };
+        const userToken = { userId: String(_id), token: hash };
         await ResetPasswordTokenRepository.insertUserToken(userToken);
 
         const link = `${env.clientUrl}/password-reset/${_id}/${resetToken}`;
