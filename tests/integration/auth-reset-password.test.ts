@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
 
+import ResetPasswordTokenRepository from '../../src/repositories/token-repository';
 import * as hash from '../../src/utils/hash';
 
 import mongoose from 'mongoose';
@@ -17,31 +18,45 @@ describe('Integration Auth reset password', () => {
     });
     afterEach(() => jest.clearAllMocks());
     it('should return 200 with a password reset successfully message', async () => {
+        const passwordResetToken = jest
+            .spyOn(ResetPasswordTokenRepository, 'findById')
+            .mockReturnValue({
+                userId: '632616df38b680c9ad0d4c88',
+                token: 'tokenUsingSpy'
+            });
         const compareStringHashSpy = jest
             .spyOn(hash, 'compareStringHash')
             .mockResolvedValue(true);
         const res = await request(app).post('/api/auth/resetpassword').send({
             userId: '632616df38b680c9ad0d4c88',
-            token: 'tokenNotForCompareUsingSpy',
+            token: 'tokenUsingSpy',
             password: '123456'
         });
         expect(res.statusCode).toBe(200);
         expect(res.body.message).toBe('password reset successfully');
         expect(compareStringHashSpy).toBeCalledTimes(1);
+        expect(passwordResetToken).toBeCalledTimes(1);
     });
 
     it('should return 400 for a not valid token', async () => {
+        const passwordResetToken = jest
+            .spyOn(ResetPasswordTokenRepository, 'findById')
+            .mockReturnValue({
+                userId: '632616df38b680c9ad0d4c88',
+                token: 'tokenUsingSpy'
+            });
         const compareStringHashSpy = jest
             .spyOn(hash, 'compareStringHash')
             .mockResolvedValue(false);
         const res = await request(app).post('/api/auth/resetpassword').send({
             userId: '632616df38b680c9ad0d4c88',
-            token: 'tokenNotForCompareUsingSpy',
+            token: 'tokenUsingSpy',
             password: '123456'
         });
         expect(res.statusCode).toBe(400);
         expect(res.body.error).toBe('invalid credentials');
         expect(compareStringHashSpy).toBeCalledTimes(1);
+        expect(passwordResetToken).toBeCalledTimes(1);
     });
 
     it('should return 400 for missing credentials', async () => {
