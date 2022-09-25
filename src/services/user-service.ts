@@ -25,7 +25,7 @@ class UserService {
                 throw new AppError('unauthorized', httpCode.UNAUTHORIZED);
             }
         } catch (err) {
-            throw new AppError(err.message, httpCode.BAD_REQUEST);
+            throw new AppError(err.message, err.statusCode);
         }
     }
 
@@ -40,12 +40,7 @@ class UserService {
         if (!user) {
             throw new AppError('invalid id', httpCode.NOT_FOUND);
         }
-
-        try {
-            return await UserRepository.deleteUser(id);
-        } catch (err) {
-            throw new AppError('user not found', httpCode.NOT_FOUND);
-        }
+        await UserRepository.deleteUser(id);
     }
 
     static async createUser(user: User) {
@@ -79,14 +74,11 @@ class UserService {
         requestName: string,
         requestRole?: string
     ) {
-        try {
-            await userUpdateValidator({ id: id });
-            const user = await UserRepository.findUserById(id);
-            if (!user) {
-                throw new AppError('user not found', httpCode.NOT_FOUND);
-            }
-        } catch (err) {
-            throw new AppError(err.message, httpCode.BAD_REQUEST);
+        await userUpdateValidator({ id: id });
+
+        const user = await UserRepository.findUserById(id);
+        if (!user) {
+            throw new AppError('user not found', httpCode.NOT_FOUND);
         }
 
         try {
