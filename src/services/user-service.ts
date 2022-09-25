@@ -9,9 +9,6 @@ import User from '../entities/user';
 class UserService {
     static async findUsers() {
         const users = await UserRepository.findUserList();
-        if (!users) {
-            throw new AppError('users not found', httpCode.NOT_FOUND);
-        }
         return users;
     }
 
