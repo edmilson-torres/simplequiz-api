@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
+
 import { httpCode } from '../../src/utils/httpCode';
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
