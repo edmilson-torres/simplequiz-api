@@ -6,6 +6,7 @@ import UserModel from '../../src/database/models/user';
 import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
+import { httpCode } from '../../src/utils/httpCode';
 
 describe('Integration Quiz list', () => {
     beforeAll(async () => {
@@ -18,6 +19,11 @@ describe('Integration Quiz list', () => {
         await mongoose.disconnect();
     });
 
+    it('should return unauthorized, without token', async () => {
+        const res = await request(app).get('/api/quiz');
+        expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
+    });
+
     it('should return all quizzies', async () => {
         const login = await request(app).post('/api/auth/login').send({
             email: 'test@mail.com',
@@ -26,6 +32,6 @@ describe('Integration Quiz list', () => {
         const res = await request(app)
             .get('/api/quiz')
             .set('Authorization', `Bearer ${login.body.user.token}`);
-        expect(res.statusCode).toBe(200);
+        expect(res.statusCode).toBe(httpCode.OK);
     });
 });
