@@ -5,19 +5,20 @@ interface FindByIdProtocol {
     token: string;
 }
 class ResetPasswordTokenRepository {
-    public findById(id: string): FindByIdProtocol {
-        const { userId, token } = ResetPasswordTokenModel.findOne({
+    async findById(id: string): Promise<FindByIdProtocol | null> {
+        const data = await ResetPasswordTokenModel.findOne({
             userId: id
         });
-        return { userId, token };
+        return data;
     }
 
-    public deleteToken(id: string) {
+    deleteToken(id: string) {
         return ResetPasswordTokenModel.deleteOne({ userId: id });
     }
 
-    public insertUserToken(userToken: Object) {
+    insertUserToken(userToken: Object) {
         return ResetPasswordTokenModel.create(userToken);
     }
 }
+
 export default new ResetPasswordTokenRepository();
