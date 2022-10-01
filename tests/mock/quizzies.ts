@@ -1,5 +1,6 @@
 export const quizzies = [
     {
+        _id: '622e7790d66360235541d2f7',
         name: 'Capitais do Norte',
         description: 'Capitais da região Norte do Brasil ',
         category: 'geografia',
@@ -43,6 +44,7 @@ export const quizzies = [
         length: 7
     },
     {
+        _id: '622ea8136b84d67dea1d0a16',
         name: 'Capitais do Nordeste',
         description: 'Capitais da região Nordeste do Brasil ',
         category: 'geografia',
@@ -94,90 +96,5 @@ export const quizzies = [
             }
         ],
         length: 9
-    },
-    {
-        name: 'Comandos Git',
-        description: 'Principais comandos do Git',
-        category: 'Versionamento',
-        questions: [
-            {
-                question: 'Para criar um novo projeto',
-                answer: 'git init',
-                options: ['git config', 'git clone', 'git branch']
-            },
-            {
-                question: 'Para copiar repositório remoto',
-                answer: 'git clone',
-                options: ['git checkout', 'git copy', 'git remote']
-            },
-            {
-                question: 'Mostra informações atuais do seu repositório',
-                answer: 'git status',
-                options: ['git info', 'git checkout', 'git stash']
-            },
-            {
-                question: "Adiciona arquivos na área de 'stage'",
-                answer: 'git add',
-                options: ['git push', 'git commit', 'git branch']
-            },
-            {
-                question: 'Registra alterações no repositório',
-                answer: 'git commit',
-                options: ['git add', 'git push', 'git pull']
-            },
-            {
-                question:
-                    'Vincular o repositório local com um repositório remoto',
-                answer: 'git remote',
-                options: ['git clone', 'git pull', 'git branch']
-            },
-            {
-                question: 'Obtém atualizações do repositório remoto',
-                answer: 'git pull',
-                options: ['git push', 'git clone', 'git commit']
-            },
-            {
-                question: 'Envia atualizações para repositório remoto',
-                answer: 'git push',
-                options: ['git pull', 'git remote', 'git send']
-            },
-            {
-                question: 'Exibe os registros log do commit',
-                answer: 'git log',
-                options: ['git status', 'git list', 'git config']
-            },
-            {
-                question: 'Obtém ou define as configurações do repositório',
-                answer: 'git config',
-                options: ['git name', 'git email', 'git set']
-            }
-        ],
-        length: 10
-    },
-    {
-        name: 'quiz example',
-        description: 'example',
-        category: 'new category',
-        length: 2,
-        questions: [
-            {
-                question: 'how to example 1?',
-                answer: 'right answer',
-                options: [
-                    'wrong  answer 1',
-                    'wrong  answer 2',
-                    'wrong  answer 3'
-                ]
-            },
-            {
-                question: 'how to example 2?',
-                answer: 'right answer',
-                options: [
-                    'wrong  answer 1',
-                    'wrong  answer 2',
-                    'wrong  answer 3'
-                ]
-            }
-        ]
     }
 ];
