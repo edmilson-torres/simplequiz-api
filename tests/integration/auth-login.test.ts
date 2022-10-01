@@ -4,6 +4,7 @@ import app from '../../src/app';
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
 import { users } from '../mock/users';
+import { httpCode } from '../../src/utils/httpCode';
 
 describe('Integration Auth login', () => {
     beforeAll(async () => {
@@ -27,14 +28,14 @@ describe('Integration Auth login', () => {
             email: 'admin@mail.com',
             password: '12345'
         });
-        expect(res.statusCode).toBe(400);
+        expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
     });
 
     it('should not sign in, missing user e-mail', async () => {
         const res = await request(app).post('/api/auth/login').send({
             password: '123456'
         });
-        expect(res.statusCode).toBe(400);
+        expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
     });
 
     it('should not sign in, user not registered', async () => {
@@ -42,6 +43,6 @@ describe('Integration Auth login', () => {
             email: 'user-not-registered@mail.com',
             password: '123456'
         });
-        expect(res.statusCode).toBe(400);
+        expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
     });
 });
