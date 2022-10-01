@@ -119,9 +119,7 @@ class AuthService {
             const pass = password.toString();
             const hash = await createStringHash(pass);
             const user = await UserRepository.updatePassword(userId, hash);
-            if (!user) {
-                throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
-            }
+
             sendEmail(
                 user.email,
                 'Password Reset Successfully',
@@ -131,6 +129,7 @@ class AuthService {
                 'templates/resetPassword.handlebars'
             );
             await ResetPasswordTokenRepository.deleteToken(userId);
+            return;
         } catch (err) {
             throw new AppError(err.message, err.statusCode);
         }
