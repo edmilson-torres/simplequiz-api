@@ -58,7 +58,7 @@ describe('Integration User update', () => {
         expect(res.statusCode).toBe(httpCode.NOT_FOUND);
     });
 
-    it('should return Ok when create a new quiz', async () => {
+    it('should return Ok when update a quiz', async () => {
         const res = await request(app)
             .put('/api/quiz/622e7790d66360235541d2f7')
             .set('Authorization', `Bearer ${adminAccessToken}`)
