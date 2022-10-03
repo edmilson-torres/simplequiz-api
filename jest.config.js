@@ -8,5 +8,8 @@ module.exports = {
     transform: {
         '.+\\.ts$': 'ts-jest'
     },
-    setupFiles: ['dotenv/config']
+    setupFiles: ['dotenv/config'],
+    restoreMocks: true,
+    resetMocks: true,
+    clearMocks: true
 };
