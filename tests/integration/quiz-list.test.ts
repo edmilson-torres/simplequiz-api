@@ -7,12 +7,23 @@ import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
 import { httpCode } from '../../src/utils/httpCode';
+import QuizRepository from '../../src/repositories/quiz-repository';
+
+let userAccessToken: string;
 
 describe('Integration Quiz list', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
         await QuizModel.insertMany(quizzies);
+        const userSignInResponse = await request(app)
+            .post('/api/auth/login')
+            .send({
+                email: 'test@mail.com',
+                password: '123456'
+            });
+        userAccessToken = userSignInResponse.body.user.token;
     });
+
     afterAll(async () => {
         await QuizModel.deleteMany();
         await UserModel.deleteMany();
@@ -24,14 +35,21 @@ describe('Integration Quiz list', () => {
         expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
     });
 
-    it('should return all quizzies', async () => {
-        const login = await request(app).post('/api/auth/login').send({
-            email: 'test@mail.com',
-            password: '123456'
-        });
+    it('should return 404 for empty list', async () => {
+        const quizRepositorySpy = jest
+            .spyOn(QuizRepository, 'findQuizList')
+            .mockRejectedValue(new Error());
         const res = await request(app)
             .get('/api/quiz')
-            .set('Authorization', `Bearer ${login.body.user.token}`);
+            .set('Authorization', `Bearer ${userAccessToken}`);
+        expect(res.statusCode).toBe(httpCode.NOT_FOUND);
+        expect(quizRepositorySpy).toBeCalledTimes(1);
+    });
+
+    it('should return all quizzies', async () => {
+        const res = await request(app)
+            .get('/api/quiz')
+            .set('Authorization', `Bearer ${userAccessToken}`);
         expect(res.statusCode).toBe(httpCode.OK);
     });
 });
