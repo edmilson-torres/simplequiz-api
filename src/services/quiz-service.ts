@@ -6,19 +6,18 @@ import AppError from '../utils/appError';
 
 class QuizService {
     static async create(quiz: Quiz) {
-        const { category, name, description, questions } = quiz;
-
-        const questionsLength: number = questions.length;
-
-        const quizModel = new QuizModel({
-            category,
-            name,
-            description,
-            questions,
-            length: questionsLength
-        });
-
         try {
+            const { category, name, description, questions } = quiz;
+
+            const questionsLength: number = questions?.length;
+            const quizModel = new QuizModel({
+                category,
+                name,
+                description,
+                questions,
+                length: questionsLength
+            });
+
             const quizCreated = await QuizRepository.createQuiz(quizModel);
             return quizCreated;
         } catch (err) {
