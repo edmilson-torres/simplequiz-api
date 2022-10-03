@@ -30,4 +30,10 @@ describe('Token validator', () => {
             )
         ).rejects.toThrow();
     });
+
+    it('should return invalid password', async () => {
+        await expect(
+            tokenValidator(invalidMock.userId, invalidMock.password, '')
+        ).rejects.toThrow();
+    });
 });
