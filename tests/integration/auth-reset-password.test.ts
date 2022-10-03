@@ -12,10 +12,10 @@ import { httpCode } from '../../src/utils/httpCode';
 describe('Integration Auth reset password', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
-        jest.spyOn(ResetPasswordTokenRepository, 'findById').mockResolvedValue({
-            userId: '632616df38b680c9ad0d4c88',
-            token: 'tokenUsingSpy'
-        });
+    });
+
+    beforeEach(() => {
+        jest.restoreAllMocks();
     });
 
     afterAll(async () => {
@@ -26,6 +26,10 @@ describe('Integration Auth reset password', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should return 200 with a password reset successfully message', async () => {
+        jest.spyOn(ResetPasswordTokenRepository, 'findById').mockResolvedValue({
+            userId: '632616df38b680c9ad0d4c88',
+            token: 'tokenUsingSpy'
+        });
         const compareStringHashSpy = jest
             .spyOn(hash, 'compareStringHash')
             .mockResolvedValue(true);
@@ -40,9 +44,6 @@ describe('Integration Auth reset password', () => {
     });
 
     it('should return 400 for a not valid token', async () => {
-        const compareStringHashSpy = jest
-            .spyOn(hash, 'compareStringHash')
-            .mockResolvedValue(false);
         const res = await request(app).post('/api/auth/resetpassword').send({
             userId: '632616df38b680c9ad0d4c88',
             token: 'tokenUsingSpy',
@@ -50,7 +51,6 @@ describe('Integration Auth reset password', () => {
         });
         expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
         expect(res.body.error).toBe('invalid credentials');
-        expect(compareStringHashSpy).toBeCalledTimes(1);
     });
 
     it('should return 400 for a not valid user id', async () => {
