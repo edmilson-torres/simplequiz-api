@@ -7,6 +7,7 @@ import QuizModel from '../../src/database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
 import { httpCode } from '../../src/utils/httpCode';
+import QuizRepository from '../../src/repositories/quiz-repository';
 
 let userAccessToken: string;
 
@@ -28,6 +29,12 @@ const quizMock = {
         }
     ]
 };
+
+const invalidQuizMock = {
+    category: 'new category',
+    description: 'example'
+};
+
 describe('Integration Quiz create', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
@@ -50,6 +57,18 @@ describe('Integration Quiz create', () => {
     it('should return unauthorized, without token', async () => {
         const res = await request(app).post('/api/quiz');
         expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
+    });
+
+    it('should return 400 for invalid quiz', async () => {
+        const quizRepositorySpy = jest
+            .spyOn(QuizRepository, 'createQuiz')
+            .mockRejectedValue(new Error());
+        const res = await request(app)
+            .post('/api/quiz')
+            .set('Authorization', `Bearer ${userAccessToken}`)
+            .send(invalidQuizMock);
+        expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
+        expect(quizRepositorySpy).toBeCalledTimes(1);
     });
 
     it('should return Ok to create a new quiz', async () => {
