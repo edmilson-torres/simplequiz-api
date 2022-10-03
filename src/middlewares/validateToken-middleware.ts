@@ -16,7 +16,7 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
         res.locals.decodedToken = decoded;
         next();
     } else {
-        throw new AppError('token is missing', httpCode.UNAUTHORIZED);
+        throw new AppError('token is wrong', httpCode.UNAUTHORIZED);
     }
 };
 

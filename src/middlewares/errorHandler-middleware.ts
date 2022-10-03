@@ -19,7 +19,7 @@ const errorHandler = (
 
     return res
         .status(httpCode.INTERNAL_SERVER_ERROR)
-        .json({ error: 'testando' });
+        .json({ error: 'internal server error' });
 };
 
 export default errorHandler;

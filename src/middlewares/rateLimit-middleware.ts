@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
-import rateLimit from 'express-rate-limit';
 
-const rateLimitMiddleware = ({
+import rateLimit from 'express-rate-limit';
+import { httpCode } from '../utils/httpCode';
+import AppError from '../utils/appError';
+
+export const rateLimitMiddleware = ({
     requestWindowInSeconds = 60,
     maxConnections = 30
 }: {
@@ -15,9 +18,6 @@ const rateLimitMiddleware = ({
             return req.ip;
         },
         handler(_, res: Response): void {
-            res.status(429);
-            throw new Error('too many request');
+            throw new AppError('too many request', httpCode.TOO_MANY_REQUESTS);
         }
     });
-
-export default rateLimitMiddleware;

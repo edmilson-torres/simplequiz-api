@@ -4,6 +4,7 @@ import app from '../../src/app';
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
 import { users } from '../mock/users';
+import { httpCode } from '../../src/utils/httpCode';
 
 describe('Integration Auth register', () => {
     beforeAll(async () => {
@@ -20,7 +21,8 @@ describe('Integration Auth register', () => {
             email: 'new.user@mail.com',
             password: '123456'
         });
-        expect(res.statusCode).toBe(201);
+        expect(res.statusCode).toBe(httpCode.CREATED);
+        expect(res.body.user.email).toBe('new.user@mail.com');
     });
 
     it('should not register a user with wrong password', async () => {
@@ -29,7 +31,8 @@ describe('Integration Auth register', () => {
             email: 'test@mail.com',
             password: '12345'
         });
-        expect(res.statusCode).toBe(400);
+        expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
+        expect(res.body).toHaveProperty('error');
     });
 
     it('should not register a existing user', async () => {
@@ -38,6 +41,7 @@ describe('Integration Auth register', () => {
             email: 'test@mail.com',
             password: '123456'
         });
-        expect(res.statusCode).toBe(409);
+        expect(res.statusCode).toBe(httpCode.CONFLICT);
+        expect(res.body.error).toBe('account already exists');
     });
 });
