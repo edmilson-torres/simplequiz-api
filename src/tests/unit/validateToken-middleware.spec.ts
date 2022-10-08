@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import request from 'supertest';
-import app from '../../src/app';
-import { httpCode } from '../../src/utils/httpCode';
+import app from '../../app';
+import { httpCode } from '../../utils/httpCode';
 
 describe('Validate token middleware', () => {
     afterAll((done) => mongoose.disconnect(done));

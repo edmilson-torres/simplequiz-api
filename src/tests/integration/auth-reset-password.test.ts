@@ -1,13 +1,13 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
-import * as hash from '../../src/libs/hash';
+import * as hash from '../../libs/hash';
 
 import mongoose from 'mongoose';
-import ResetPasswordTokenRepository from '../../src/repositories/token-repository';
-import UserModel from '../../src/database/models/user';
+import ResetPasswordTokenRepository from '../../repositories/token-repository';
+import UserModel from '../../database/models/user';
 import { users } from '../mock/users';
-import { httpCode } from '../../src/utils/httpCode';
+import { httpCode } from '../../utils/httpCode';
 
 describe('Integration Auth reset password', () => {
     beforeAll(async () => {

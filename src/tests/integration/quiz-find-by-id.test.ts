@@ -1,17 +1,20 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
-import { httpCode } from '../../src/utils/httpCode';
 import mongoose from 'mongoose';
-import UserModel from '../../src/database/models/user';
+import UserModel from '../../database/models/user';
+import QuizModel from '../../database/models/quiz';
 import { users } from '../mock/users';
+import { quizzies } from '../mock/quizzies';
+import { httpCode } from '../../utils/httpCode';
 
 let userAccessToken: string;
 let adminAccessToken: string;
 
-describe('Integration User list', () => {
+describe('Integration Quiz find quiz', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
+        await QuizModel.insertMany(quizzies);
         const userSignInResponse = await request(app)
             .post('/api/auth/login')
             .send({
@@ -27,29 +30,32 @@ describe('Integration User list', () => {
             });
         adminAccessToken = adminSignInResponse.body.user.token;
     });
+
     afterAll(async () => {
+        await QuizModel.deleteMany();
         await UserModel.deleteMany();
         await mongoose.disconnect();
     });
-    afterEach(() => jest.clearAllMocks());
 
     it('should return unauthorized, without token', async () => {
-        const res = await request(app).get('/api/users');
+        const res = await request(app).get(
+            '/api/quiz/622e7790d66360235541d2f7'
+        );
         expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
     });
 
-    it('should return forbidden, without admin role', async () => {
+    it('should return not found if quiz not exist', async () => {
         const res = await request(app)
-            .get('/api/users')
-            .set('Authorization', `Bearer ${userAccessToken}`);
-        expect(res.statusCode).toBe(httpCode.FORBIDDEN);
+            .get('/api/quiz/622e7790d66360235541d2f6')
+            .set('Authorization', `Bearer ${adminAccessToken}`);
+        expect(res.statusCode).toBe(httpCode.NOT_FOUND);
     });
 
-    it('should list all users', async () => {
+    it('should find quiz by id', async () => {
         const res = await request(app)
-            .get('/api/users')
+            .get('/api/quiz/622e7790d66360235541d2f7')
             .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(200);
-        expect(Array.isArray(res.body)).toBe(true);
+        expect(res.statusCode).toBe(httpCode.OK);
+        expect(res.body._id).toBe('622e7790d66360235541d2f7');
     });
 });

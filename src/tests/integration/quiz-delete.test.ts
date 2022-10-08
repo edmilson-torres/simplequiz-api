@@ -1,17 +1,17 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
 import mongoose from 'mongoose';
-import UserModel from '../../src/database/models/user';
-import QuizModel from '../../src/database/models/quiz';
+import UserModel from '../../database/models/user';
+import QuizModel from '../../database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
-import { httpCode } from '../../src/utils/httpCode';
+import { httpCode } from '../../utils/httpCode';
 
 let userAccessToken: string;
 let adminAccessToken: string;
 
-describe('Integration Quiz find quiz', () => {
+describe('Integration Quiz delete', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
         await QuizModel.insertMany(quizzies);
@@ -38,24 +38,30 @@ describe('Integration Quiz find quiz', () => {
     });
 
     it('should return unauthorized, without token', async () => {
-        const res = await request(app).get(
+        const res = await request(app).delete(
             '/api/quiz/622e7790d66360235541d2f7'
         );
         expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
     });
 
+    it('should return forbidden, without admin role', async () => {
+        const res = await request(app)
+            .delete('/api/quiz/622e7790d66360235541d2f7')
+            .set('Authorization', `Bearer ${userAccessToken}`);
+        expect(res.statusCode).toBe(httpCode.FORBIDDEN);
+    });
+
     it('should return not found if quiz not exist', async () => {
         const res = await request(app)
-            .get('/api/quiz/622e7790d66360235541d2f6')
+            .delete('/api/quiz/622e7790d66360235541d2f6')
             .set('Authorization', `Bearer ${adminAccessToken}`);
         expect(res.statusCode).toBe(httpCode.NOT_FOUND);
     });
 
-    it('should find quiz by id', async () => {
+    it('should delete quiz by id', async () => {
         const res = await request(app)
-            .get('/api/quiz/622e7790d66360235541d2f7')
+            .delete('/api/quiz/622e7790d66360235541d2f7')
             .set('Authorization', `Bearer ${adminAccessToken}`);
         expect(res.statusCode).toBe(httpCode.OK);
-        expect(res.body._id).toBe('622e7790d66360235541d2f7');
     });
 });
