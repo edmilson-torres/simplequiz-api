@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
 
-import * as sendTestEmail from '../../src/utils/email/sendTestMail';
+import * as sendTestEmail from '../../src/libs/email/sendTestMail';
 
 import mongoose from 'mongoose';
 import UserModel from '../../src/database/models/user';
