@@ -7,8 +7,6 @@ describe('Validate token middleware', () => {
     afterAll((done) => mongoose.disconnect(done));
 
     it('should return a error on invalid token verify', async () => {
-        // const verifyJwt = jest.fn();
-        // verifyJwt.mockReturnValue(false);
         const res = await request(app)
             .get('/api/users')
             .set('Authorization', `Bearer test`);
