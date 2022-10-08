@@ -4,12 +4,12 @@ import env from '../config/env';
 import UserRepository from '../repositories/user-repository';
 import ResetPasswordTokenRepository from '../repositories/token-repository';
 import UserService from '../services/user-service';
-import tokenValidator from '../utils/tokenValidator';
-import emailValidator from '../utils/emailValidator';
-import { compareStringHash, createStringHash } from '../utils/hash';
-import { signJwt } from '../utils/jwt';
-import { sendEmail } from '../utils/email/sendEmail';
-import { sendTestEmail } from '../utils/email/sendTestMail';
+import tokenValidator from '../utils/validators/token-validator';
+import emailValidator from '../utils/validators/email-validator';
+import { compareStringHash, createStringHash } from '../libs/hash';
+import { signJwt } from '../libs/jwt';
+import { sendEmail } from '../libs/email/sendEmail';
+import { sendTestEmail } from '../libs/email/sendTestMail';
 import AppError from '../utils/appError';
 import { httpCode } from '../utils/httpCode';
 

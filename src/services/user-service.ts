@@ -1,8 +1,8 @@
 import AppError from '../utils/appError';
 import UserRepository from '../repositories/user-repository';
-import { createStringHash } from '../utils/hash';
-import userRegisterValidator from '../utils/userRegisterValidator';
-import userUpdateValidator from '../utils/userUpdateValidator';
+import { createStringHash } from '../libs/hash';
+import userRegisterValidator from '../utils/validators/userRegister-validator';
+import userUpdateValidator from '../utils/validators/userUpdate-validator';
 import { httpCode } from '../utils/httpCode';
 import User from '../entities/user';
 

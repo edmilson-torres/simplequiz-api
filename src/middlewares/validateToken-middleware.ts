@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { httpCode } from '../utils/httpCode';
 import AppError from '../utils/appError';
-import { verifyJwt } from '../utils/jwt';
+import { verifyJwt } from '../libs/jwt';
 
 const validateToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1];
