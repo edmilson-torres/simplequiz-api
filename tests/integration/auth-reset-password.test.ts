@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
 
-import * as hash from '../../src/utils/hash';
+import * as hash from '../../src/libs/hash';
 
 import mongoose from 'mongoose';
 import ResetPasswordTokenRepository from '../../src/repositories/token-repository';

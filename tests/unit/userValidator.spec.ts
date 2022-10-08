@@ -1,4 +1,4 @@
-import userRegisterValidator from '../../src/utils/userRegisterValidator';
+import userRegisterValidator from '../../src/utils//validators/userRegister-validator';
 
 const mock = {
     name: 'Edmilson',

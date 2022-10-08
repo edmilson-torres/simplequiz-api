@@ -1,4 +1,4 @@
-import { compareStringHash, createStringHash } from '../../src/utils/hash';
+import { compareStringHash, createStringHash } from '../../src/libs/hash';
 
 describe('Hash', () => {
     it('should create hash', async () => {
