@@ -4,7 +4,7 @@ import env from '../config/env';
 export function signJwt(object: Object, options?: jwt.SignOptions | undefined) {
     const secret = String(env.secretJWT);
     const token = jwt.sign(object, secret, {
-        ...(options && options),
+        ...(options ?? options),
         algorithm: 'HS256'
     });
 
