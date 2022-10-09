@@ -1,13 +1,13 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
 import mongoose from 'mongoose';
-import UserModel from '../../src/database/models/user';
-import QuizModel from '../../src/database/models/quiz';
+import UserModel from '../../database/models/user';
+import QuizModel from '../../database/models/quiz';
 import { users } from '../mock/users';
 import { quizzies } from '../mock/quizzies';
-import { httpCode } from '../../src/utils/httpCode';
-import QuizRepository from '../../src/repositories/quiz-repository';
+import { httpCode } from '../../utils/httpCode';
+import QuizRepository from '../../repositories/quiz-repository';
 
 let userAccessToken: string;
 

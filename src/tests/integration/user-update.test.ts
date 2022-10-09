@@ -1,9 +1,9 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
-import { httpCode } from '../../src/utils/httpCode';
+import { httpCode } from '../../utils/httpCode';
 import mongoose from 'mongoose';
-import UserModel from '../../src/database/models/user';
+import UserModel from '../../database/models/user';
 import { users } from '../mock/users';
 
 let userAccessToken: string;

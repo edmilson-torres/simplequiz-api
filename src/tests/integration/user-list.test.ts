@@ -1,16 +1,15 @@
 import request from 'supertest';
-import app from '../../src/app';
+import app from '../../app';
 
-import { httpCode } from '../../src/utils/httpCode';
+import { httpCode } from '../../utils/httpCode';
 import mongoose from 'mongoose';
-import UserModel from '../../src/database/models/user';
+import UserModel from '../../database/models/user';
 import { users } from '../mock/users';
-import QuizRepository from '../../src/repositories/quiz-repository';
 
 let userAccessToken: string;
 let adminAccessToken: string;
 
-describe('Integration User delete', () => {
+describe('Integration User list', () => {
     beforeAll(async () => {
         await UserModel.insertMany(users);
         const userSignInResponse = await request(app)
@@ -35,41 +34,22 @@ describe('Integration User delete', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should return unauthorized, without token', async () => {
-        const res = await request(app).delete(
-            '/api/users/632616df38b680c9ad0d4c88'
-        );
+        const res = await request(app).get('/api/users');
         expect(res.statusCode).toBe(httpCode.UNAUTHORIZED);
     });
 
     it('should return forbidden, without admin role', async () => {
         const res = await request(app)
-            .delete('/api/users/632616df38b680c9ad0d4c88')
+            .get('/api/users')
             .set('Authorization', `Bearer ${userAccessToken}`);
         expect(res.statusCode).toBe(httpCode.FORBIDDEN);
     });
 
-    it('should return user not found', async () => {
+    it('should list all users', async () => {
         const res = await request(app)
-            .delete('/api/users/632fb514e7e90e4a4699a298')
+            .get('/api/users')
             .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(httpCode.NOT_FOUND);
-    });
-
-    it('should return 404 if quiz no exist', async () => {
-        const quizRepositorySpy = jest
-            .spyOn(QuizRepository, 'deleteQuiz')
-            .mockRejectedValue(new Error());
-        const res = await request(app)
-            .delete('/api/quiz/632fb514e7e90e4a4699a298')
-            .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(httpCode.NOT_FOUND);
-        expect(quizRepositorySpy).toBeCalledTimes(1);
-    });
-
-    it('should delete user by id', async () => {
-        const res = await request(app)
-            .delete('/api/users/632616df38b680c9ad0d4c88')
-            .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(204);
+        expect(res.statusCode).toBe(200);
+        expect(Array.isArray(res.body)).toBe(true);
     });
 });

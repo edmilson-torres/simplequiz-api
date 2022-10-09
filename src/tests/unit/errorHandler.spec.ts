@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import errorHandler from '../../src/middlewares/errorHandler-middleware';
-import AppError from '../../src/utils/appError';
-import { httpCode } from '../../src/utils/httpCode';
+import errorHandler from '../../middlewares/errorHandler-middleware';
+import AppError from '../../utils/appError';
+import { httpCode } from '../../utils/httpCode';
 
 let response: any;
 

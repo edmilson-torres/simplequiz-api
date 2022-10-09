@@ -1,10 +1,21 @@
-# [WIP] 🚧 Simple Quiz
-Making REST API to provide quizzes
+# ✅ Simple Quiz
+REST API to provide questionnaires.
 
+This is my playground github repository for applying principles and new technologies.
+
+## 👷‍♂️ Pattern
+- **Controller:** management of the REST interface to the business logic
+- **Service:** business logic implementations
+- **Repository:** storage of the entity in the system
+  
+> Next steps: apply SOLID principles and more Typescript types
+  
 ## ⚙️ Technologies
 - Core: Typescript, Node.js and Expressjs  
-- Database: MongoDB with mongoose
-- Authentication: JWT, nodemailer and handlebars 
+- Database: MongoDB using mongoose
+- Authentication: JWT
+- E-mail: nodemailer and handlebars 
+- Tests: Jest and supertest
 - Validation: Yup
 - Security: CORS, helmet and rate-limit 
 - Hash: bcrypt
@@ -12,41 +23,26 @@ Making REST API to provide quizzes
 - Log: Morgan
 - Code analysis: ESlint  
 - Code formatter: Prettier  
-- E-mail tests with Mailtrap.io or ethereal.email
-
-## 🖼️ API docs
-![localhost_3000_api-docs](https://user-images.githubusercontent.com/64763336/174910658-d74e0c1c-f852-46cf-b716-fcd6d576bba8.png)
-
+- E-mail tests with Mailtrap.io (development use ethereal.email)
 
 ## 🚀 Running
 - Config `.env` with yours credentials or rename `.env.example`
 - `docker-compose up`  
 or  
 - Install dependencies: `yarn`
-- Development use `yarn dev`
-- Build use `yarn build`
-- Start user `yarn start`
+- Development `yarn dev`
+- Build `yarn build`
+- Start `yarn start`
 
-## 📑 TODO
-✔️ get all quizzes  
-✔️ get quiz by id  
-✔️ create user  
-✔️ get user  
-✔️ get user list  
-✔️ delete user  
-✔️ user register  
-✔️ user login  
-✔️ user edit  
-✔️ admin role  
-✔️ create quiz  
-✔️ edit quiz  
-✔️ delete quiz  
-✔️ auth middleware  
-✔️ rate-limit middleware  
-✔️ register validator  
-⬜ quiz validator  
-✔️ admin middleware  
-✔️ strip logic from controllers and create services  
-✔️ swagger docs  
-✔️ password reset e-mail  
-⬜ jest tests
+## 🗃️ Docker
+```bash
+$ docker-compose up -d
+```
+
+## 📄 API Docs
+```bash
+$ http://localhost:3000/api-docs
+```
+
+## 🖼️ Swagger
+![localhost_3000_api-docs](https://user-images.githubusercontent.com/64763336/174910658-d74e0c1c-f852-46cf-b716-fcd6d576bba8.png)
