@@ -1,24 +1,14 @@
-import Quiz from '../entities/quiz';
-import { QuizModel } from '../database/models/quiz';
-import QuizRepository from '../repositories/quiz-repository';
-import { httpCode } from '../utils/httpCode';
-import AppError from '../utils/appError';
+import Quiz from '../entities/quiz.ts';
+import QuizRepository from '../repositories/quiz-repository.ts';
+import { httpCode } from '../utils/httpCode.ts';
+import AppError from '../utils/appError.ts';
 
 class QuizService {
     static async create(quiz: Quiz) {
         try {
-            const { category, name, description, questions } = quiz;
+            quiz.length = quiz.questions?.length;
 
-            const questionsLength: number = questions?.length;
-            const quizModel = new QuizModel({
-                category,
-                name,
-                description,
-                questions,
-                length: questionsLength
-            });
-
-            const quizCreated = await QuizRepository.createQuiz(quizModel);
+            const quizCreated = await QuizRepository.createQuiz(quiz);
             return quizCreated;
         } catch (err) {
             throw new AppError(err.message, httpCode.BAD_REQUEST);
@@ -26,19 +16,10 @@ class QuizService {
     }
 
     static async update(id: string, quiz: Quiz) {
-        const { category, name, description, questions } = quiz;
+        quiz.length = quiz.questions?.length;
 
-        const length = questions?.length;
-
-        const quizData: Quiz = {
-            category: category,
-            name: name,
-            description: description,
-            questions: questions,
-            length: length
-        };
         try {
-            const quizUpdated = await QuizRepository.updateQuiz(id, quizData);
+            const quizUpdated = await QuizRepository.updateQuiz(id, quiz);
             if (!quizUpdated) {
                 throw new AppError('not found', httpCode.NOT_FOUND);
             }
