@@ -1,13 +1,13 @@
-import nodemailer from 'nodemailer';
-import handlebars from 'handlebars';
 import { readFileSync } from 'fs';
+import handlebars from 'handlebars';
+import nodemailer from 'nodemailer';
 import { resolve } from 'path';
 import env from '../../config/env';
 
 export const sendTestEmail = async (
     email: string,
     subject: string,
-    payload: Object,
+    payload: { name: string; link: string },
     template: string
 ): Promise<string | false> => {
     try {

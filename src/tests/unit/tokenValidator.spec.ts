@@ -13,7 +13,7 @@ const invalidMock = {
 };
 
 describe('Token validator', () => {
-    it('should return a valid', async () => {
+    it('should return valid', async () => {
         const res = await tokenValidator(
             mock.userId,
             mock.password,
@@ -21,19 +21,19 @@ describe('Token validator', () => {
         );
         expect(res).toBe(true);
     });
-    it('should return invalid password', async () => {
+    it('should throw invalid password if use password dont have 6 or more characters', async () => {
         await expect(
             tokenValidator(
                 invalidMock.userId,
                 invalidMock.password,
                 invalidMock.token
             )
-        ).rejects.toThrow();
+        ).rejects.toThrow('Password must be longer than 6 characters');
     });
 
-    it('should return invalid password', async () => {
+    it('should throw Token is required', async () => {
         await expect(
             tokenValidator(invalidMock.userId, invalidMock.password, '')
-        ).rejects.toThrow();
+        ).rejects.toThrow('Token is required');
     });
 });

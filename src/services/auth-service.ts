@@ -1,17 +1,17 @@
 import crypto from 'crypto';
 
 import env from '../config/env';
-import UserRepository from '../repositories/user-repository';
-import ResetPasswordTokenRepository from '../repositories/token-repository';
-import UserService from '../services/user-service';
-import tokenValidator from '../utils/validators/token-validator';
-import emailValidator from '../utils/validators/email-validator';
-import { compareStringHash, createStringHash } from '../libs/hash';
-import { signJwt } from '../libs/jwt';
 import { sendEmail } from '../libs/email/sendEmail';
 import { sendTestEmail } from '../libs/email/sendTestMail';
+import { compareStringHash, createStringHash } from '../libs/hash';
+import { signJwt } from '../libs/jwt';
+import ResetPasswordTokenRepository from '../repositories/token-repository';
+import UserRepository from '../repositories/user-repository';
+import UserService from '../services/user-service';
 import AppError from '../utils/appError';
 import { httpCode } from '../utils/httpCode';
+import emailValidator from '../utils/validators/email-validator';
+import tokenValidator from '../utils/validators/token-validator';
 
 class AuthService {
     static async login(email: string, password: string) {
@@ -35,7 +35,10 @@ class AuthService {
         }
 
         try {
-            const payload: Object = { sub: _id, role: user.role };
+            const payload: { sub: string; role: string } = {
+                sub: _id,
+                role: user.role
+            };
             const token = signJwt(payload, {
                 expiresIn: `${process.env.NODE_ENV === 'dev' ? '180m' : '5m'}`
             });
@@ -52,7 +55,7 @@ class AuthService {
 
     static async resetPasswordRequest(email: string) {
         try {
-            await emailValidator({ email });
+            await emailValidator(email);
         } catch (err) {
             throw new AppError('invalid e-mail', httpCode.BAD_REQUEST);
         }

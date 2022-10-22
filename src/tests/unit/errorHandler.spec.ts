@@ -14,7 +14,7 @@ describe('Error handler', () => {
 
     afterAll((done) => mongoose.disconnect(done));
 
-    it('should a syntax error return a bad request', async () => {
+    it('should a syntax error return a not found', async () => {
         const error = new AppError('application error', httpCode.NOT_FOUND);
 
         errorHandler(error, null as any, response as any, null as any);
@@ -32,7 +32,7 @@ describe('Error handler', () => {
         expect(response.json).toHaveBeenCalled();
     });
 
-    it('should a syntax error return a bad request', async () => {
+    it('should a syntax error return a internal server error', async () => {
         const error = new Error();
 
         errorHandler(error, null as any, response as any, null as any);

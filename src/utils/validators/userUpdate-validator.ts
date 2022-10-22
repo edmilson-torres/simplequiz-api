@@ -8,7 +8,12 @@ const schema = Yup.object().shape({
     role: Yup.mixed().oneOf(['admin', 'user'])
 });
 
-async function userUpdateValidator(form: Object) {
+interface UserUpdateValidatorProtocol {
+    id?: string;
+    name?: string;
+    role?: string;
+}
+async function userUpdateValidator(form: UserUpdateValidatorProtocol) {
     const result = await schema.isValid(form);
     const error = await schema
         .validate(form, { abortEarly: false })

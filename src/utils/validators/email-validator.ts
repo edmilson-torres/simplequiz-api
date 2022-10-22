@@ -6,12 +6,12 @@ const schema = Yup.object().shape({
         .required('Email is required')
 });
 
-async function emailValidator(form: Object) {
-    const result = await schema.isValid(form);
-    const error = await schema.validate(form).catch((err) => err.errors);
+async function emailValidator(email: string) {
+    const result = await schema.isValid({ email });
+    const error = await schema.validate({ email }).catch((err) => err.errors);
 
     if (!result) {
-        throw new Error(error)
+        throw new Error(error);
     }
 
     return result;

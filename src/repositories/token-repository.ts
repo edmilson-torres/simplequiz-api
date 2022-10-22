@@ -16,7 +16,7 @@ class ResetPasswordTokenRepository {
         return ResetPasswordTokenModel.deleteOne({ userId: id });
     }
 
-    insertUserToken(userToken: Object) {
+    insertUserToken(userToken: { userId: string; token: string }) {
         return ResetPasswordTokenModel.create(userToken);
     }
 }

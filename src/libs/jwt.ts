@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
 import env from '../config/env';
 
-export function signJwt(object: Object, options?: jwt.SignOptions | undefined) {
+export function signJwt(
+    object: { sub: string; role: string },
+    options?: jwt.SignOptions | undefined
+) {
     const secret = String(env.secretJWT);
     const token = jwt.sign(object, secret, {
         ...(options ?? options),

@@ -1,7 +1,7 @@
-import Quiz from '../entities/quiz.ts';
-import QuizRepository from '../repositories/quiz-repository.ts';
-import { httpCode } from '../utils/httpCode.ts';
-import AppError from '../utils/appError.ts';
+import Quiz from '../entities/quiz';
+import QuizRepository from '../repositories/quiz-repository';
+import AppError from '../utils/appError';
+import { httpCode } from '../utils/httpCode';
 
 class QuizService {
     static async create(quiz: Quiz) {

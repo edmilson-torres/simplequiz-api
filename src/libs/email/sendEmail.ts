@@ -1,13 +1,13 @@
-import nodemailer from 'nodemailer';
-import handlebars from 'handlebars';
 import { readFileSync } from 'fs';
+import handlebars from 'handlebars';
+import nodemailer from 'nodemailer';
 import { resolve } from 'path';
 import env from '../../config/env';
 
 export const sendEmail = async (
     email: string,
     subject: string,
-    payload: Object,
+    payload: { name: string; link?: string },
     template: string
 ) => {
     try {

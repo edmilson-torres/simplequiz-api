@@ -14,7 +14,13 @@ const schema = Yup.object().shape({
         .required('Password is required')
 });
 
-async function userRegisterValidator(form: Object) {
+interface UserRegisterValidatorProtocol {
+    email: string;
+    name: string;
+    password: string;
+}
+
+async function userRegisterValidator(form: UserRegisterValidatorProtocol) {
     const result = await schema.isValid(form);
     const error = await schema
         .validate(form, { abortEarly: false })
