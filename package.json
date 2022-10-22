@@ -1,7 +1,7 @@
 {
   "name": "simple-quiz",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "author": "Edmilson Torres <edmilson.torres@gmail.com>",
   "license": "MIT",
   "scripts": {
