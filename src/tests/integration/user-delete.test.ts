@@ -1,11 +1,10 @@
 import request from 'supertest';
 import app from '../../app';
 
-import { httpCode } from '../../utils/httpCode';
 import mongoose from 'mongoose';
 import UserModel from '../../database/models/user';
+import { httpCode } from '../../utils/httpCode';
 import { users } from '../mock/users';
-import QuizRepository from '../../repositories/quiz-repository';
 
 let userAccessToken: string;
 let adminAccessToken: string;
@@ -55,21 +54,10 @@ describe('Integration User delete', () => {
         expect(res.statusCode).toBe(httpCode.NOT_FOUND);
     });
 
-    it('should return 404 if quiz no exist', async () => {
-        const quizRepositorySpy = jest
-            .spyOn(QuizRepository, 'deleteQuiz')
-            .mockRejectedValue(new Error());
-        const res = await request(app)
-            .delete('/api/quiz/632fb514e7e90e4a4699a298')
-            .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(httpCode.NOT_FOUND);
-        expect(quizRepositorySpy).toBeCalledTimes(1);
-    });
-
     it('should delete user by id', async () => {
         const res = await request(app)
             .delete('/api/users/632616df38b680c9ad0d4c88')
             .set('Authorization', `Bearer ${adminAccessToken}`);
-        expect(res.statusCode).toBe(204);
+        expect(res.statusCode).toBe(httpCode.NO_CONTENT);
     });
 });
