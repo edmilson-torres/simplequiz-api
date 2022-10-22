@@ -1,7 +1,16 @@
-import UserModel, { User } from '../database/models/user';
+import UserModel from '../database/models/user';
+import User from '../entities/user';
 
+interface UserFromMongoDb {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+    password: string;
+    createAt: Date;
+}
 class UserRepository {
-    public async findUserById(id: string): Promise<User> {
+    public async findUserById(id: string): Promise<UserFromMongoDb> {
         return UserModel.findById(id, [
             '-createAt',
             '-password',
@@ -9,7 +18,7 @@ class UserRepository {
         ]).lean();
     }
 
-    public async findUserByEmail(email: string): Promise<User> {
+    public async findUserByEmail(email: string): Promise<UserFromMongoDb> {
         return UserModel.findOne({ email: email }).lean();
     }
 
@@ -17,7 +26,7 @@ class UserRepository {
         return UserModel.find({}, '-password').lean();
     }
 
-    public async createUser(user: Object) {
+    public async createUser(user: Partial<User>) {
         return UserModel.create(user);
     }
 
@@ -41,8 +50,8 @@ class UserRepository {
         ).lean();
     }
 
-    public async deleteUser(id: string): Promise<Object> {
-        return UserModel.deleteOne({ _id: id });
+    public deleteUser(id: string): void {
+        UserModel.deleteOne({ _id: id });
     }
 }
 
