@@ -15,8 +15,6 @@ const errorHandler = (
         return res.status(httpCode.BAD_REQUEST).json({ error: err.message });
     }
 
-    console.log(err);
-
     return res
         .status(httpCode.INTERNAL_SERVER_ERROR)
         .json({ error: 'internal server error' });
