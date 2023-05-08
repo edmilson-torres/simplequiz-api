@@ -3,8 +3,8 @@ import app from '../../app';
 
 import mongoose from 'mongoose';
 import UserModel from '../../database/models/user';
-import { users } from '../mock/users';
 import { httpCode } from '../../utils/httpCode';
+import { users } from '../mock/users';
 
 describe('Integration Auth login', () => {
     beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('Integration Auth login', () => {
         await mongoose.disconnect();
     });
 
-    it('should sign in an return a token', async () => {
+    it('should sign in and return a token', async () => {
         const res = await request(app).post('/api/auth/login').send({
             email: 'test@mail.com',
             password: '123456'
@@ -36,6 +36,7 @@ describe('Integration Auth login', () => {
             password: '123456'
         });
         expect(res.statusCode).toBe(httpCode.BAD_REQUEST);
+        expect(res.body.error).toBe('user or password missing');
     });
 
     it('should not sign in, user not registered', async () => {

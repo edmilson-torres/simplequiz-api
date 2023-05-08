@@ -4,6 +4,8 @@ const schema = Yup.object().shape({
     email: Yup.string()
         .email('Must be a valid email')
         .required('Email is required')
+        .nullable()
+        .transform((o, c) => (o === '' ? null : c))
 });
 
 async function emailValidator(email: string) {
