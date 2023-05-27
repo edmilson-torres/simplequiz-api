@@ -3,7 +3,7 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 
 describe('CORS Middleware', () => {
-    afterAll((done) => mongoose.disconnect(done));
+    afterAll(() => mongoose.disconnect());
     test('Should enable CORS', async () => {
         app.get('/test_cors', (req, res) => {
             res.send();
