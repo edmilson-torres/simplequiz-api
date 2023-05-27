@@ -3,7 +3,7 @@ import request from 'supertest';
 import { mongoose } from '@typegoose/typegoose';
 
 describe('Ratelimit', () => {
-    afterAll((done) => mongoose.disconnect(done));
+    afterAll(() => mongoose.disconnect());
 
     it('should ensure the rate limit is used', async () => {
         const response = await request(app).get('/api/users');
