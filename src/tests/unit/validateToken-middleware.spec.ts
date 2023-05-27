@@ -4,7 +4,7 @@ import app from '../../app';
 import { httpCode } from '../../utils/httpCode';
 
 describe('Validate token middleware', () => {
-    afterAll((done) => mongoose.disconnect(done));
+    afterAll(() => mongoose.disconnect());
 
     it('should return a error on invalid token verify', async () => {
         const res = await request(app)

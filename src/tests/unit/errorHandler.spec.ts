@@ -12,7 +12,7 @@ describe('Error handler', () => {
         response.json = jest.fn().mockReturnValue(response);
     });
 
-    afterAll((done) => mongoose.disconnect(done));
+    afterAll(() => mongoose.disconnect());
 
     it('should a syntax error return a not found', async () => {
         const error = new AppError('application error', httpCode.NOT_FOUND);
