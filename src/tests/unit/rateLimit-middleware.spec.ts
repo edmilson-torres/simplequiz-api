@@ -12,7 +12,7 @@ describe('Ratelimit', () => {
 
     it('should return error 429 too many requests', async () => {
         let response = await request(app).get('/api/users');
-        const maxAttemps = response.headers['x-ratelimit-limit'];
+        const maxAttemps = parseInt(response.headers['x-ratelimit-limit'])
         for (let i = maxAttemps; i > 0; i--) {
             response = await request(app).get('/api/users');
         }
