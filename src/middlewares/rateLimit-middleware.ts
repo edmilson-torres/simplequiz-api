@@ -1,5 +1,3 @@
-import { Request, Response } from 'express';
-
 import rateLimit from 'express-rate-limit';
 import { httpCode } from '../utils/httpCode';
 import AppError from '../utils/appError';
@@ -14,10 +12,8 @@ export const rateLimitMiddleware = ({
     rateLimit({
         windowMs: requestWindowInSeconds * 1000,
         max: maxConnections,
-        keyGenerator(req: Request): string {
-            return req.ip;
-        },
-        handler(_, res: Response): void {
+
+        handler(): void {
             throw new AppError('too many request', httpCode.TOO_MANY_REQUESTS);
         }
     });

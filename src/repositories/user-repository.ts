@@ -10,7 +10,7 @@ interface UserFromMongoDb {
     createAt: Date;
 }
 class UserRepository {
-    public async findUserById(id: string): Promise<UserFromMongoDb> {
+    public async findUserById(id: string): Promise<UserFromMongoDb | null> {
         return UserModel.findById(id, [
             '-createAt',
             '-password',
@@ -18,7 +18,9 @@ class UserRepository {
         ]).lean();
     }
 
-    public async findUserByEmail(email: string): Promise<UserFromMongoDb> {
+    public async findUserByEmail(
+        email: string
+    ): Promise<UserFromMongoDb | null> {
         return UserModel.findOne({ email: email }).lean();
     }
 
@@ -34,7 +36,7 @@ class UserRepository {
         id: string,
         name?: string,
         role?: string
-    ): Promise<User> {
+    ): Promise<User | null> {
         return UserModel.findByIdAndUpdate(
             { _id: id },
             { name: name, role: role },
@@ -42,7 +44,10 @@ class UserRepository {
         ).lean();
     }
 
-    public async updatePassword(userId: string, hash: string): Promise<User> {
+    public async updatePassword(
+        userId: string,
+        hash: string
+    ): Promise<User | null> {
         return UserModel.findOneAndUpdate(
             { _id: userId },
             { $set: { password: hash } },

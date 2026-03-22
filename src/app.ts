@@ -1,13 +1,13 @@
+import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
-import MongoConnection from './database/mongo';
 import helmet from 'helmet';
-import cors from 'cors';
 import morgan from 'morgan';
-import routes from './routes';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
+import MongoConnection from './database/mongo';
 import errorHandler from './middlewares/errorHandler-middleware';
+import routes from './routes';
+import swaggerDocument from './swagger.json';
 
 import mongoose from 'mongoose';
 import server from './server';
@@ -22,15 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' }));
+app.use(
+    morgan('dev', { skip: (_req, _res) => process.env.NODE_ENV === 'test' })
+);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', routes);
-app.use('*', (req, res) => res.redirect('/api-docs'));
+app.use('*', (_req, res) => res.redirect('/api-docs'));
 
 app.use(errorHandler);
 
-function gracefulShutdown(code: any) {
+function gracefulShutdown(_code: any) {
     return (event: any) => {
         console.info(`${event} signal received with code ${event}`);
         console.log('Closing http server...');
@@ -57,7 +59,7 @@ process.on('uncaughtException', (error, origin) => {
     console.info(`\n${origin} signal received.`, error);
 });
 
-process.on('unhandledRejection', (error, origin) => {
+process.on('unhandledRejection', (error, _origin) => {
     console.info('\nunhandledRejection signal received.', error);
 });
 

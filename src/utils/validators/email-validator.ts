@@ -8,7 +8,7 @@ const schema = Yup.object().shape({
         .transform((o, c) => (o === '' ? null : c))
 });
 
-async function emailValidator(email: string) {
+async function emailValidator(email: unknown) {
     const result = await schema.isValid({ email });
     const error = await schema.validate({ email }).catch((err) => err.errors);
 

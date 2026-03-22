@@ -54,11 +54,7 @@ class AuthService {
     }
 
     static async resetPasswordRequest(email: string) {
-        try {
-            await emailValidator(email);
-        } catch (err) {
-            throw new AppError('invalid e-mail', httpCode.BAD_REQUEST);
-        }
+        await emailValidator(email);
         const user = await UserService.findUserByEmail(email);
         if (!user) {
             throw new AppError('email not registered', httpCode.NOT_FOUND);
@@ -97,7 +93,6 @@ class AuthService {
             return testMailLink;
         }
     }
-
     static async resetPassword(
         userId: string,
         password: string,
@@ -123,6 +118,10 @@ class AuthService {
             const hash = await createStringHash(pass);
             const user = await UserRepository.updatePassword(userId, hash);
 
+            if (!user) {
+                throw new AppError('invalid credentials', httpCode.BAD_REQUEST);
+            }
+
             sendEmail(
                 user.email,
                 'Password Reset Successfully',
@@ -131,6 +130,7 @@ class AuthService {
                 },
                 'templates/resetPassword.handlebars'
             );
+
             await ResetPasswordTokenRepository.deleteToken(userId);
             return;
         } catch (err) {

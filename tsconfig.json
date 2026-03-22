@@ -14,6 +14,7 @@
       "src"
     ],
     "baseUrl": "src",
+    "strictNullChecks": true
   },
   "include": [
     "src"
